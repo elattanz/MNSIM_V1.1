@@ -1,6 +1,6 @@
 #include "SetShifter.h"
 
-SetShifter::SetShifter(Technology tech, int shifter_num) {
+SetShifter::SetShifter(int shifter_num) {
   Shifter_InputNum = shifter_num;
 }
 
