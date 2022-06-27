@@ -1,7 +1,7 @@
 #include "SetMux.h"
 
 
-SetDemux::SetDemux(Technology tech, int mux_num){
+SetDemux::SetDemux(int mux_num){
   Mux_InputNum = mux_num;
 }
 
