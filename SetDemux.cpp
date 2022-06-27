@@ -20,7 +20,7 @@ double SetDemux::Demux_Area(){
     case 64 :
       return 263.2773;
     default 
-      return 0;
+      return 0; }
   }
  
 double SetDemux::Demux_Latency(){
@@ -36,7 +36,7 @@ double SetDemux::Demux_Latency(){
     case 64 :
       return .19;
     default 
-      return 0;
+      return 0; }
   }
   
 double SetDemux::Demux_Power_Leakage(){
@@ -52,7 +52,7 @@ double SetDemux::Demux_Power_Leakage(){
     case 64 :
       return 740.6179e-9;
     default 
-      return 0;
+      return 0; }
   }
   
 double SetDemux::Demux_Power_Dynamic(){
@@ -68,6 +68,6 @@ double SetDemux::Demux_Power_Dynamic(){
     case 64 :
       return 27.7357e-6;
     default 
-      return 0;
+      return 0; }
   }  
   
