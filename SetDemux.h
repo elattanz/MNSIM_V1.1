@@ -10,7 +10,7 @@ class SetDemux {
   public:
           int Demux_InputNum; //size of gate, ex a 4 means a 1:4 DEMUX
   
-          SetDemux(Technology tech, int Demux_num);
+          SetDemux(Technology tech, int demux_num);
           double ~SetDemux();
           double Demux_Area();
           double Demux_Latency();
