@@ -10,7 +10,7 @@ class SetMultiplier{
   public:
           int Mult_InputNum; 
           
-          SetMultiplier(Technology tech, int mult_num);
+          SetMultiplier(int mult_num);
           double ~SetMultiplier();
           double Mult_Area();
           double Mult_Latency();
