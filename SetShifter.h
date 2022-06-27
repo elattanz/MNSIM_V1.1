@@ -9,7 +9,7 @@ class SetShifter{
   public:
           int Shifter_InputNum; 
           
-          SetShifter(Technology tech, int shifter_num);
+          SetShifter(int shifter_num);
           double ~SetShifter();
           double Shifter_Area();
           double Shifter_Latency();
