@@ -1,7 +1,7 @@
 #include "SetDemux.h"
 
 
-SetDemux::SetDemux(Technology tech, int demux_num){
+SetDemux::SetDemux(int demux_num){
   Demux_InputNum = demux_num;
 }
 
