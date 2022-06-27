@@ -8,7 +8,7 @@ SetMultiplier::SetMultiplier(int mult_num) {
 
 SetMultiplier::~SetMultiplier() {}
 
-double Mult_Area () {
+double SetMultiplier::Mult_Area () {
   switch (Mult_InputNum)
    case 8 :
       return 384.826;
@@ -21,7 +21,7 @@ double Mult_Area () {
 }
 
 
-double Mult_Latency () {
+double SetMultiplier::Mult_Latency () {
   switch (Mult_InputNum)
    case 8 :
       return .91;
@@ -34,7 +34,7 @@ double Mult_Latency () {
 }
 
 
-double Mult_Power_Leakage () {
+double SetMultiplier::Mult_Power_Leakage () {
   switch (Mult_InputNum)
    case 8 :
       return 2.2366e-6;
@@ -46,7 +46,7 @@ double Mult_Power_Leakage () {
      return 0;
 }
 
-double Mult_Power_Dynamic () {
+double SetMultiplier::Mult_Power_Dynamic () {
   switch (Mult_InputNum)
    case 8 :
       return 96.8856e-6;
