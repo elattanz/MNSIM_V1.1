@@ -15,7 +15,7 @@ class SetDemux {
           double Demux_Area();
           double Demux_Latency();
           double Demux_Power_Leakage();
-          double Demux_Power)Dynamic();
+          double Demux_Power_Dynamic();
 };
 
 #endif
