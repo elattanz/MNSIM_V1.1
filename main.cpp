@@ -29,7 +29,8 @@ double tech;
 int err_count;
 Technology *technology;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
 	clock_t tic,toc;
 	tic=clock();
 	inputParameter = new InputParameter();
@@ -62,6 +63,7 @@ int main(int argc, char *argv[]) {
 	}
 	cout << endl;
 
+	/* Emily removed this 
 	//read configs  &  init configs
 	inputParameter->ReadInputParameterFromFile(inputFileName);
 	if (inputParameter->Application[0] == 'c' ||inputParameter->Application[0] == 'C') //Convolution
@@ -72,147 +74,104 @@ int main(int argc, char *argv[]) {
     	action_type = 2;
     else
     	action_type = 0;
-
-	//Behavior level estimation
-    //Unused part
-	switch (inputParameter->Target_Output[0]) {
-		case 'a':
-				target = 1;break;
-		case 'A':
-				target = 1;break;
-		case 'e':
-				target = 2;break;
-		case 'E':
-				target = 2;break;
-		case 'l':
-				target = 3;break;
-		case 'L':
-				target = 3;break;
-		case 'p':
-				target = 4;break;
-		case 'P':
-				target = 4;break;
-	}
+	*/
 
 	technology = new Technology();
 	technology->Initialize(inputParameter->TranTech, HP/*inputParameter->deviceRoadmap*/);
 
 	Technology techHigh;
 	double alpha = 0;
-	if (inputParameter->TranTech > 200){  //choose the technology node and calculate the parameters
+	//if (inputParameter->TranTech > 200){  //choose the technology node and calculate the parameters
 		// TO-DO: technology node > 200 nm
-	} 
-	else if (inputParameter->TranTech > 120) { // 120 nm < technology node <= 200 nm
-		techHigh.Initialize(200, HP/*inputParameter->deviceRoadmap*/);
-		alpha = (inputParameter->TranTech - 120.0) / 60;
-	} 
-	else if (inputParameter->TranTech > 90) { // 90 nm < technology node <= 120 nm
-		techHigh.Initialize(120, HP/*inputParameter->deviceRoadmap*/);
-		alpha = (inputParameter->TranTech - 90.0) / 30;
-	} 
-	else if (inputParameter->TranTech > 65) { // 65 nm < technology node <= 90 nm
-		techHigh.Initialize(90, HP/*inputParameter->deviceRoadmap*/);
-		alpha = (inputParameter->TranTech - 65.0) / 25;
-	} 
-	else if (inputParameter->TranTech > 45) { // 45 nm < technology node <= 65 nm
-		techHigh.Initialize(65, HP/*inputParameter->deviceRoadmap*/);
-		alpha = (inputParameter->TranTech - 45.0) / 20;
-	} 
-	else if (inputParameter->TranTech >= 32) { // 32 nm < technology node <= 45 nm
-		techHigh.Initialize(45, HP/*inputParameter->deviceRoadmap*/);
-		alpha = (inputParameter->TranTech - 32.0) / 13;
-	} 
-	else if (inputParameter->TranTech >= 22) { // 22 nm < technology node <= 32 nm
-		techHigh.Initialize(32, HP/*inputParameter->deviceRoadmap*/);
-		alpha = (inputParameter->TranTech - 22.0) / 10;
-	} 
-	else {
-		//TO-DO: technology node < 22 nm
-	}
+	//} 
 
-	technology->InterpolateWith(techHigh, alpha);  //
+	//else if (inputParameter->TranTech > 45) { // 45 nm < technology node <= 65 nm
+	//	techHigh.Initialize(65, HP/*inputParameter->deviceRoadmap*/);
+	//	alpha = (inputParameter->TranTech - 45.0) / 20;
+	//} 
+	//else if (inputParameter->TranTech >= 32) { // 32 nm < technology node <= 45 nm
+		
+	techHigh.Initialize(45, HP/*inputParameter->deviceRoadmap*/);
+	alpha = (inputParameter->TranTech - 32.0) / 13;
+	//} 
+
+
+	technology->InterpolateWith(techHigh, alpha);  
 
 	//  load tech
 	int tech = inputParameter->TranTech;
-    double minarea = 8e10;
-    double minenergy = 8e10;
-    double minpower = 8e10;
-    double minlatency = 8e10;
-    double minerr = 8e10;
+   	double minarea = 8e10;
+   	double minenergy = 8e10;
+    	double minpower = 8e10;
+    	double minlatency = 8e10;
+    	double minerr = 8e10;
 	//double mintarget[8]={0,0,minarea,minenergy,minlatency,minerr,minpower};
-    double mintarget[4]={minarea,minenergy,minlatency,minpower};
+    	double mintarget[4]={minarea,minenergy,minlatency,minpower};
 	double input_err[200]={0};
-    row = (min(1,inputParameter->maxAdPos)-max(0,inputParameter->minAdPos)+1)*(min(16,inputParameter->maxBtLv)-max(0,inputParameter->minBtLv)+1)*(min(1,inputParameter->maxAdder)-max(0,inputParameter->minAdder)+1)*(log(inputParameter->maxXbarSize)/log(2)-log(inputParameter->minXbarSize)/log(2)+1)*128*inputParameter->AppScale+1;//*6 Decide by the size of crossbar
+    	row = (min(1,inputParameter->maxAdPos)-max(0,inputParameter->minAdPos)+1)*(min(16,inputParameter->maxBtLv)-max(0,inputParameter->minBtLv)+1)*(min(1,inputParameter->maxAdder)-max(0,inputParameter->minAdder)+1)*(log(inputParameter->maxXbarSize)/log(2)-log(inputParameter->minXbarSize)/log(2)+1)*128*inputParameter->AppScale+1;//*6 Decide by the size of crossbar
 	AAestrslt = new double* [row];
 	for(int i =0; i < row; i++)
 		AAestrslt[i] = new double [19];
-    for (double adposition=max(0,inputParameter->minAdPos);adposition<=min(1,inputParameter->maxAdPos);adposition++) {
-        for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) {
-            for (double adderposition = max(0,inputParameter->minAdder);adderposition<=min(1,inputParameter->maxAdder);adderposition++) {
-                for (double linetech = 90;linetech<=90;linetech++) {//[18,22,28,36,45,65,90];
-                    for (double celltype = 1;celltype<=1;celltype++) {
+    for (double adposition=max(0,inputParameter->minAdPos);adposition<=min(1,inputParameter->maxAdPos);adposition++) 
+    {
+        for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
+	{
+            for (double adderposition = max(0,inputParameter->minAdder);adderposition<=min(1,inputParameter->maxAdder);adderposition++) 
+	    {
+                for (double linetech = 90;linetech<=90;linetech++) 
+		{    //[18,22,28,36,45,65,90];
+                    for (double celltype = 1;celltype<=1;celltype++) 
+		    {
                         //pulseposition = 0;
-                        for (double xbarsize = inputParameter->minXbarSize;xbarsize<=inputParameter->maxXbarSize;xbarsize*=2) {//[4,8,16,32,64,128,256]%,512,1024]
-                            for (double read_sep = 1;read_sep<=128;read_sep++) {//xbarsize/128 : xbarsize/128 : xbarsize%8:8:xbarsize
+                        for (double xbarsize = inputParameter->minXbarSize;xbarsize<=inputParameter->maxXbarSize;xbarsize*=2) 
+			{   //[4,8,16,32,64,128,256]%,512,1024]
+                            for (double read_sep = 1;read_sep<=128;read_sep++)
+			    {   //xbarsize/128 : xbarsize/128 : xbarsize%8:8:xbarsize
                                 if (xbarsize<inputParameter->minXbarSize || xbarsize > inputParameter->maxXbarSize)
+				{
                                     cout<<"error:xbarsize over the limit"<<endl;
+				}
                                 else
-									for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) { //-1
-										if (bit_level != 0)
-											cell_bit = bit_level;
-										//calculate bandwidth
-										determin_sig(xbarsize,adderposition,inputParameter->sig_bit,cell_bit,adposition);
-										determin_net(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1],signalsize);
-											
-										unit_area_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->rramtech,read_sep);
-											
-										unit_latency_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,read_sep);
-											
-										unit_power_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,application,inputParameter->maxRRang,netrow,xbar_latency,adda_latency,adder_latency,decoder_latency,write_latency,read_latency,read_sep);
-											
-										periphery_area(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application);
-											
-										periphery_latency_c(*technology,netrow, adderposition,pulseposition,inputParameter->sig_bit,application);
-										    
-										periphery_power_c(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);
-											
-
-										accuracy_c(xbarsize,linetech,inputParameter->sig_bit,cell_bit,inputParameter->maxRRang,input_err[(int)netlevel-1]);
-											
-										input_err[(int)netlevel] = accuracy;
-											
-										area = area_u * netrow * netcolumn + area_l + area_p ;//+ area_r + area_w;
-										energy = utilization * power_u * latency_u * netrow * netcolumn + power_l * latency_l + power_p * latency_p;
-										latency = latency = latency_u + latency_l + latency_p;
-
-										latency_multi = latency_u;
-
-										/*if (adderposition == 0) {
-											latency_multi = latency_u;
-										}
-										else {
-											latency_multi = latency_u * netrow;
-										}*/
-										power_multi = utilization * power_u * netrow * netcolumn;
-										//power_flags = power_flags * netrow * netcolumn;
-										area_multi = area_u * netrow * netcolumn;
-										power = utilization * power_u  * netrow * netcolumn + power_l  + power_p ;
-											
-										equal(netlevel,area,energy,latency,power,accuracy,area_multi,power_multi,latency_multi,read_sep,adposition,bit_level,adderposition,pulseposition,linetech,celltype,xbarsize);
-
-										if (accuracy < minerr) {
-											minerr = accuracy;
-											err_count = count_my;
-										}
-										count_my = count_my + 1;
-									}				
-							}
-            			}
-        			}
-    			}
-    		}
-		}
-	}
+				{
+					for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) 
+					{ //-1
+						//if (bit_level != 0)
+						//cell_bit = bit_level;
+						//calculate bandwidth
+						determin_sig(xbarsize,adderposition,inputParameter->sig_bit,cell_bit,adposition);
+						determin_net(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1],signalsize);		
+						unit_area_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->rramtech,read_sep);	
+						unit_latency_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,read_sep);
+						unit_power_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,application,inputParameter->maxRRang,netrow,xbar_latency,adda_latency,adder_latency,decoder_latency,write_latency,read_latency,read_sep);
+						periphery_area(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application);
+						periphery_latency_c(*technology,netrow, adderposition,pulseposition,inputParameter->sig_bit,application); 
+						periphery_power_c(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);
+						//accuracy_c(xbarsize,linetech,inputParameter->sig_bit,cell_bit,inputParameter->maxRRang,input_err[(int)netlevel-1]);	
+						//input_err[(int)netlevel] = accuracy;
+						area = area_u * netrow * netcolumn + area_l + area_p ;//+ area_r + area_w;
+						energy = utilization * power_u * latency_u * netrow * netcolumn + power_l * latency_l + power_p * latency_p;
+						latency = latency = latency_u + latency_l + latency_p;
+						latency_multi = latency_u;
+						power_multi = utilization * power_u * netrow * netcolumn;
+							//power_flags = power_flags * netrow * netcolumn;
+						area_multi = area_u * netrow * netcolumn;
+						power = utilization * power_u  * netrow * netcolumn + power_l  + power_p ;
+						equal(netlevel,area,energy,latency,power,accuracy,area_multi,power_multi,latency_multi,read_sep,adposition,bit_level,adderposition,pulseposition,linetech,celltype,xbarsize);
+						//if (accuracy < minerr) 
+						//{
+						//	minerr = accuracy;
+						//	err_count = count_my;
+						//}
+						//count_my = count_my + 1;
+					}//for				
+				}//else
+            		    }//for
+        		}//for
+    		    }//for
+    		}//for
+	    }//for
+	}//for
+    }//for 
 
 
 
@@ -296,7 +255,7 @@ int main(int argc, char *argv[]) {
 		fout<<"energy:"<<optresult[2]<<endl;
 		fout<<"latency:"<<optresult[3]<<endl;
 		fout<<"power:"<<optresult[4]<<endl;
-		fout<<"accuracy:"<<optresult[5]<<endl;
+		//fout<<"accuracy:"<<optresult[5]<<endl;
 		fout<<"area_multi:"<<optresult[6]<<endl;
 		fout<<"power_multi:"<<optresult[7]<<endl;
 		fout<<"latency_multi:"<<optresult[8]<<endl;
