@@ -53,76 +53,74 @@ void InputParameter::ReadInputParameterFromFile(string filename){
     int config_begin = 0;
     int config_end = 0;
     bool flag = true;
+    bool sim_mode = 0; //0 for electronic, 1 for photonic
     i = 0;
-    while(flag){
-    	if(cfgtxt[i].find("config")!=string::npos){
+    while(flag)
+    {
+    	if(cfgtxt[i].find("config")!=string::npos)
+	{
     		config_begin = i;
-            j = i;
-    		while(1){
-                if (cfgtxt[j].find("}")!=string::npos){
+		// emily added this part
+		if(cfgtxt[i+1].find("photonic")!=string::npos)
+		{
+			sim_mode = 1;
+		} 
+		else if(cfgtxt[i+1].find("electronic")!=string::npos)
+		{
+			sim_mode = 0;
+		} 			
+		j = i;
+    		while(1)
+		{
+                	if (cfgtxt[j].find("}")!=string::npos)
+			{
     				config_end = j;
-                    break;
-                }
-                else j++;
+				break;
+                	}
+                	else j++;
     		}
-            flag = false;
+           	flag = false;
     	}
         i++;
     }
 
-	for (i=config_begin;i<=config_end;i++){
-		if(cfgtxt[i].find("Simulation_Level ")!=string::npos)      
-            SimLv.assign(cfgtxt[i],sizeof("Simulation_Level "),cfgtxt[i].length()-sizeof("Simulation_Level"));   
-        else if(cfgtxt[i].find("Target_Outputs ")!=string::npos)
-            Target_Output.assign(cfgtxt[i],sizeof("Target_Outputs "),cfgtxt[i].length()-sizeof("Target_Outputs"));
-        else if(cfgtxt[i].find("Application ")!=string::npos)
-            Application.assign(cfgtxt[i],sizeof("Application "),cfgtxt[i].length()-sizeof("Application"));
-       	else if(cfgtxt[i].find("Application_Scale")!=string::npos){
-            temp.assign(cfgtxt[i],sizeof("Application_Scale"),temp.length()-sizeof("Application_Scale")); 
+	// simplified
+	for (i=(config_begin+1);i<=config_end;i++)
+	{
+       		if(cfgtxt[i].find("Application_Scale")!=string::npos)
+		{
+            		temp.assign(cfgtxt[i],sizeof("Application_Scale"),temp.length()-sizeof("Application_Scale")); 
 			AppScale = std::stoi (temp,nullptr,0);
 		}
-		else if(cfgtxt[i].find("Weight_Polarity")!=string::npos){
-            temp.assign(cfgtxt[i],sizeof("Weight_Polarity"),temp.length()-sizeof("Weight_Polarity")); 
+		else if(cfgtxt[i].find("Weight_Polarity")!=string::npos)
+		{
+            		temp.assign(cfgtxt[i],sizeof("Weight_Polarity"),temp.length()-sizeof("Weight_Polarity")); 
 			WeightPolar = std::stoi (temp,nullptr,0);
 		}
-		else if(cfgtxt[i].find("Cell_Type ")!=string::npos){
-            temp.assign(cfgtxt[i],sizeof("Cell_Type "),temp.length()-sizeof("Cell_Type"));
-			stringstream stream(temp);
-			stream>>minCell;
-			maxCell=minCell;
-		}
-		else if(cfgtxt[i].find("RRAM_Model ")!=string::npos)
-            RRAMModel.assign(cfgtxt[i],sizeof("RRAM_Model "),cfgtxt[i].length()-sizeof("RRAM_Model"));
-        else if(cfgtxt[i].find("RRAM_Bit_Levels")!=string::npos){
-            temp.assign(cfgtxt[i],sizeof("RRAM_Bit_Levels"),temp.length()-sizeof("RRAM_Bit_Levels")); 
+		// max cell and min cell no longer defined here
+   		else if(cfgtxt[i].find("Bit_Levels")!=string::npos)
+		{
+            		temp.assign(cfgtxt[i],sizeof("Bit_Levels"),temp.length()-sizeof("Bit_Levels")); 
 			minBtLv = std::stoi (temp,nullptr,0);
 			maxBtLv=minBtLv;
 		}
-		else if(cfgtxt[i].find("Transistor_Tech(nm)")!=string::npos){
-            temp.assign(cfgtxt[i],sizeof("Transistor_Tech(nm)"),temp.length()-sizeof("Transistor_Tech(nm)")); 
-			TranTech = std::stoi(temp,nullptr,0);
-		}
-		else if(cfgtxt[i].find("Min_Crossbar_Size")!=string::npos){
-            temp.assign(cfgtxt[i],sizeof("Min_Crossbar_Size"),temp.length()-sizeof("Min_Crossbar_Size")); 
+		else if(cfgtxt[i].find("Min_Crossbar_Size")!=string::npos)
+		{
+            		temp.assign(cfgtxt[i],sizeof("Min_Crossbar_Size"),temp.length()-sizeof("Min_Crossbar_Size")); 
 			minXbarSize = std::stoi(temp,nullptr,0);
 		}
-		else if(cfgtxt[i].find("Max_Crossbar_Size")!=string::npos){
-            temp.assign(cfgtxt[i],sizeof("Max_Crossbar_Size"),temp.length()-sizeof("Max_Crossbar_Size")); 
+		else if(cfgtxt[i].find("Max_Crossbar_Size")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Max_Crossbar_Size"),temp.length()-sizeof("Max_Crossbar_Size")); 
 			maxXbarSize = std::stoi(temp,nullptr,0);
 		}
-		else if(cfgtxt[i].find("Write_Method ")!=string::npos)
-            WriteMth.assign(cfgtxt[i],sizeof("Write_Method "),cfgtxt[i].length()-sizeof("Write_Method"));
-        else if(cfgtxt[i].find("Line_Tech")!=string::npos){
-            temp.assign(cfgtxt[i],sizeof("Line_Tech"),temp.length()-sizeof("Line_Tech")); 
-			minLine = std::stoi(temp,nullptr,0);
-			maxLine = std::stoi(temp,nullptr,0);
-		}
-		else if(cfgtxt[i].find("Action_Type ")!=string::npos)
-            Action_type.assign(cfgtxt[i],sizeof("Action_Type "),cfgtxt[i].length()-sizeof("Action_Type"));
-        else if(cfgtxt[i].find("Pipeline")!=string::npos){
-            temp.assign(cfgtxt[i],sizeof("Pipeline"),temp.length()-sizeof("Pipeline"));
-            Pipeline = std::stoi(temp,nullptr,0);
-        }
+		else if(cfgtxt[i].find("Pipeline")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Pipeline"),temp.length()-sizeof("Pipeline"));
+          		Pipeline = std::stoi(temp,nullptr,0);
+        	}
+		// if sim_mode = 1, code will keep reading for the other components (ex, MUX, DEMUX, shifters, etc.)
+		// customized components will be added here
 	}
 
 	ComputationTime = new int[AppScale];
