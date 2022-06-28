@@ -1,23 +1,9 @@
-// Simulation_Level = Estimation/Behavior/Circuit
-// Target_Outputs = Area/Latency/Power/Energy for estimation
-// Target_Outputs = Voltage/Current/Resistence/Function for behavior & circuit
-
-
 config {
-	Simulation_Level Estimation
-	Target_Outputs Energy
-	Application CNN
 	Application_Scale 9
 	Weight_Polarity 2
-	Cell_Type 0T1R
-	RRAM_Model ideal
-	RRAM_Bit_Levels 8
-	Transistor_Tech(nm) 130
+	Bit_Levels 8
 	Min_Crossbar_Size 256
 	Max_Crossbar_Size 256
-	Write_Method ideal
-	Line_Tech 22
-	Action_Type Calculation
 	Pipeline 0
 }
 
