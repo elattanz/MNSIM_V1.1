@@ -1,4 +1,5 @@
 config {
+	Photonic
 	Application_Scale 9
 	Weight_Polarity 2
 	Bit_Levels 8
