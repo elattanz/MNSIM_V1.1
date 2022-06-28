@@ -51,9 +51,7 @@ void Technology::Initialize(int DeviceRoadmap _deviceRoadmap)
 {
 	if (initialized)
 		cout << "Warning: Already initialized!" << endl;
-
-	//featureSizeInNano = _featureSizeInNano;
-	//featureSize = _featureSizeInNano * 1e-9;
+	int featureSize = 45 * 1e-9;
 	deviceRoadmap = _deviceRoadmap;
 	// emily deleted the feature sizes beyond 45nm 	
 	//else if (_featureSizeInNano >= 45) {
