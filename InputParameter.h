@@ -15,20 +15,20 @@ public:
 
 	/* Properties */
 	int AppScale;
-	double rs;   
-	int cell_bit;
+	//double rs;   
+	//int cell_bit;
 	int sig_bit;
-	double rramtech;
+	//double rramtech;
 	int minXbarSize;
 	int maxXbarSize;
-	int minCell;
-	int maxCell;
+	//int minCell;
+	//int maxCell;
 	int minAdPos;
 	int maxAdPos;
 	int minBtLv;
 	int maxBtLv;
-	int minRRang;
-	int maxRRang;
+	//int minRRang;
+	//int maxRRang;
 	int minAdder;
 	int maxAdder;
 	int minLine;
@@ -38,12 +38,12 @@ public:
 	int *OutputChannel;
 	int *InputLength;
 	string SimLv;
-    string Target_Output;
-	string Application;
-	string Action_type;
+    	//string Target_Output;
+	//string Application;
+	//string Action_type;
 	int WeightPolar;
-	string Cell;
-	string RRAMModel;
+	//string Cell;
+	//string RRAMModel;
 	int TranTech;
 	string WriteMth;
 	string *cfgtxt;
