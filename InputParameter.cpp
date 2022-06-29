@@ -249,15 +249,16 @@ void InputParameter::ReadInputParameterFromFile(string filename){
 			int n=0; 
 			for(int k=0; k<subCompNum; k++)
 			{
-				temp.assign(cfgtxt[i+n+1],sizeof("Area"),temp.length()-sizeof("Area"));
+				// next immediate line is the number component, we don't need to save that to a var so we skip that line
+				temp.assign(cfgtxt[i+n+2],sizeof("Area"),temp.length()-sizeof("Area"));
 				subArea[k] = std::stoi(temp,nullptr,0);
-				temp.assign(cfgtxt[i+n+2],sizeof("Latency"),temp.length()-sizeof("Latency"));
+				temp.assign(cfgtxt[i+n+3],sizeof("Latency"),temp.length()-sizeof("Latency"));
 				subLatency[k] = std::stoi(temp,nullptr,0);
-				temp.assign(cfgtxt[i+n+3],sizeof("Leakage Power"),temp.length()-sizeof("Leakage Power"));
+				temp.assign(cfgtxt[i+n+4],sizeof("Leakage Power"),temp.length()-sizeof("Leakage Power"));
 				subLeakPw[k] = std::stoi(temp,nullptr,0);
-				temp.assign(cfgtxt[i+n+4],sizeof("Dynamic Power"),temp.length()-sizeof("Dynamic Power"));
+				temp.assign(cfgtxt[i+n+5],sizeof("Dynamic Power"),temp.length()-sizeof("Dynamic Power"));
 				subDymPw[k] = std::stoi(temp,nullptr,0);
-				n = n+4;
+				n = n+5;
 			}//for
         	}//else if 
 	}//for 
