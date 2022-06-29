@@ -15,7 +15,7 @@ public:
 
 	/* Properties */
 	int AppScale;
-	//double rs;   
+	double rs;   
 	//int cell_bit;
 	int sig_bit;
 	double rramtech;
@@ -50,7 +50,7 @@ public:
 	int Pipeline;
 	int MUX4;
 	int MUX8;
-	int MU16;
+	int MUX16;
 	int MUX32;
 	int MUX64;
 	int DEMUX4;
@@ -73,7 +73,7 @@ public:
    	double subArea[15]; // can add up to 16 extra components 
     	double subLatency[15];
     	double subLeakPw[15];
-    	double subDymPW[15];
+    	double subDymPw[15];
 
 };
 
