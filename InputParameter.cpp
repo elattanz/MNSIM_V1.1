@@ -7,7 +7,7 @@
 InputParameter::InputParameter() {
 	// TODO Auto-generated constructor stub
 	AppScale = 0;
-	//rs = 3000;   
+	rs = 3000;   
 	//cell_bit = 8;
 	sig_bit = 8;
 	//rramtech = 32e-9;
