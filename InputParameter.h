@@ -18,7 +18,7 @@ public:
 	//double rs;   
 	//int cell_bit;
 	int sig_bit;
-	//double rramtech;
+	double rramtech;
 	int minXbarSize;
 	int maxXbarSize;
 	//int minCell;
@@ -27,8 +27,8 @@ public:
 	int maxAdPos;
 	int minBtLv;
 	int maxBtLv;
-	//int minRRang;
-	//int maxRRang;
+	int minRRang;
+	int maxRRang;
 	int minAdder;
 	int maxAdder;
 	int minLine;
