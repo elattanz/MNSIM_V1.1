@@ -115,7 +115,7 @@ void Technology::Initialize(DeviceRoadmap _deviceRoadmap)
 			currentOffPmos[80] = currentOffNmos[80];
 			currentOffPmos[90] = currentOffNmos[90];
 			currentOffPmos[100] = currentOffNmos[100];
-		}
+		} //else 
 		else if (_deviceRoadmap == LSTP) 
 		{
 			/* MASTAR 5 - lstp-bulk-2010.pro */
@@ -176,7 +176,7 @@ void Technology::Initialize(DeviceRoadmap _deviceRoadmap)
 			currentOffPmos[80] = currentOffNmos[80];
 			currentOffPmos[90] = currentOffNmos[90];
 			currentOffPmos[100] = currentOffNmos[100];
-		} 
+		} //else if 
 		else 
 		{
 			/* MASTAR 5 - lop-bulk-2010.pro */
@@ -237,8 +237,8 @@ void Technology::Initialize(DeviceRoadmap _deviceRoadmap)
 			currentOffPmos[80] = currentOffNmos[80];
 			currentOffPmos[90] = currentOffNmos[90];
 			currentOffPmos[100] = currentOffNmos[100];
-		}
-	}
+		}//else
+	
 
 	// THE REST OF THIS CODE STILL NEEDS TO BE LOOKED AT AND CHANGED
 
@@ -262,32 +262,40 @@ void Technology::Initialize(DeviceRoadmap _deviceRoadmap)
 	capPolywire = 0.0;	/* TO-DO: we need to find the values */
 
 	/* Interpolate */
-	for (int i = 1; i < 100; i++) {
-		if (i % 10) {
+	for (int i = 1; i < 100; i++) 
+	{
+		if (i % 10) 
+		{
 			double a = currentOnNmos[i / 10 * 10];
 			double b = currentOnNmos[i / 10 * 10 + 10];
 			currentOnNmos[i] = a + (b-a) * (i % 10) / 10;
 		}
 	}
 
-	for (int i = 1; i < 100; i++) {
-		if (i % 10) {
+	for (int i = 1; i < 100; i++) 
+	{
+		if (i % 10) 
+		{
 			double a = currentOnPmos[i / 10 * 10];
 			double b = currentOnPmos[i / 10 * 10 + 10];
 			currentOnPmos[i] = a + (b-a) * (i % 10) / 10;
 		}
 	}
 
-	for (int i = 1; i < 100; i++) {
-		if (i % 10) {
+	for (int i = 1; i < 100; i++) 
+	{
+		if (i % 10)
+		{
 			double a = currentOffNmos[i / 10 * 10];
 			double b = currentOffNmos[i / 10 * 10 + 10];
 			currentOffNmos[i] = a + (b-a) * (i % 10) / 10;
 		}
 	}
 
-	for (int i = 1; i < 100; i++) {
-		if (i % 10) {
+	for (int i = 1; i < 100; i++)
+	{
+		if (i % 10) 
+		{
 			double a = currentOffPmos[i / 10 * 10];
 			double b = currentOffPmos[i / 10 * 10 + 10];
 			currentOffPmos[i] = a + (b-a) * (i % 10) / 10;
@@ -296,12 +304,15 @@ void Technology::Initialize(DeviceRoadmap _deviceRoadmap)
 
 	initialized = true;
 }
-void Technology::PrintProperty() {
+
+void Technology::PrintProperty()
+{
 	cout << "Fabrication Process Technology Node:" << endl;
 	cout << "TO-DO" << endl;
 }
 
-void Technology::InterpolateWith(Technology rhs, double _alpha) {
+void Technology::InterpolateWith(Technology rhs, double _alpha) 
+{
 	if (featureSizeInNano != rhs.featureSizeInNano) {
 		vdd = (1 - _alpha) * vdd + _alpha * rhs.vdd;
 		vth = (1 - _alpha) * vth + _alpha * rhs.vth;
