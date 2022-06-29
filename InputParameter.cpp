@@ -45,6 +45,7 @@ InputParameter::InputParameter() {
 	mult16 = 0;
 	mult32 = 0;
 	counter16 = 0;
+	subCompNum = 0;
 	
 }
 InputParameter::~InputParameter() {
@@ -74,7 +75,7 @@ void InputParameter::ReadInputParameterFromFile(string filename){
     int config_begin = 0;
     int config_end = 0;
     bool flag = true;
-    bool sim_mode = 0; //0 for electronic, 1 for photonic
+	
     i = 0;
     while(flag)
     {
@@ -107,141 +108,159 @@ void InputParameter::ReadInputParameterFromFile(string filename){
 
 
 	// reading in configration from file
-		for (i=(config_begin+1);i<=config_end;i++)
+	for (i=(config_begin+1);i<=config_end;i++)
+	{
+       		if(cfgtxt[i].find("Application_Scale")!=string::npos)
 		{
-       			if(cfgtxt[i].find("Application_Scale")!=string::npos)
-			{
-            			temp.assign(cfgtxt[i],sizeof("Application_Scale"),temp.length()-sizeof("Application_Scale")); 
-				AppScale = std::stoi (temp,nullptr,0);
-			}
-			else if(cfgtxt[i].find("Weight_Polarity")!=string::npos)
-			{
-            			temp.assign(cfgtxt[i],sizeof("Weight_Polarity"),temp.length()-sizeof("Weight_Polarity")); 
-				WeightPolar = std::stoi (temp,nullptr,0);
-			}
-			// max cell and min cell no longer defined here
-   			else if(cfgtxt[i].find("Bit_Levels")!=string::npos)
-			{
-            			temp.assign(cfgtxt[i],sizeof("Bit_Levels"),temp.length()-sizeof("Bit_Levels")); 
-				minBtLv = std::stoi (temp,nullptr,0);
-				maxBtLv=minBtLv;
-			}
-			else if(cfgtxt[i].find("Min_Crossbar_Size")!=string::npos)
-			{
-            			temp.assign(cfgtxt[i],sizeof("Min_Crossbar_Size"),temp.length()-sizeof("Min_Crossbar_Size")); 
-				minXbarSize = std::stoi(temp,nullptr,0);
-			}
-			else if(cfgtxt[i].find("Max_Crossbar_Size")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Max_Crossbar_Size"),temp.length()-sizeof("Max_Crossbar_Size")); 
-				maxXbarSize = std::stoi(temp,nullptr,0);
-			}
-			else if(cfgtxt[i].find("Pipeline")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Pipeline"),temp.length()-sizeof("Pipeline"));
-          			Pipeline = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("MUX 1:4")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 4:1"),temp.length()-sizeof("MUX 4:1"));
-          			MUX4 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("MUX 1:8")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 8:1"),temp.length()-sizeof("MUX 8:1"));
-          			MUX8 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("MUX 1:16")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 16:1"),temp.length()-sizeof("MUX 16:1"));
-          			MUX16 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("MUX 1:32")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 32:1"),temp.length()-sizeof("MUX 32:1"));
-          			MUX32 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("MUX 1:64")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 64:1"),temp.length()-sizeof("MUX 64:1"));
-          			MUX64 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("DEMUX 1:4")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 1:4"),temp.length()-sizeof("MUX 1:4"));
-          			DEMUX4 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("DEMUX 1:8")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 1:8"),temp.length()-sizeof("MUX 1:8"));
-          			DEMUX8 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("DEMUX 1:16")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 1:16"),temp.length()-sizeof("MUX 1:16"));
-          			DEMUX16 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("DEMUX 1:32")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 1:32"),temp.length()-sizeof("MUX 1:32"));
-          			DEMUX32 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("DEMUX 1:64")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("MUX 1:64"),temp.length()-sizeof("MUX 1:64"));
-          			DEMUX64 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Ripple Carry Adder 8-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Ripple Carry Adder 8-bit"),temp.length()-sizeof("Ripple Carry Adder 8-bit"));
-          			RPC8 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Ripple Carry Adder 16-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Ripple Carry Adder 16-bit"),temp.length()-sizeof("Ripple Carry Adder 16-bit"));
-          			RPC16 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Ripple Carry Adder 32-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Ripple Carry Adder 32-bit"),temp.length()-sizeof("Ripple Carry Adder 32-bit"));
-          			RPC32 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Shifter 8-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Shifter 8-bit"),temp.length()-sizeof("Shifter 8-bit"));
-          			shifter8 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Shifter 16-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Shifter 16-bit"),temp.length()-sizeof("Shifter 16-bit"));
-          			shifter16 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Shifter 32-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Shifter 32-bit"),temp.length()-sizeof("Shifter 32-bit"));
-          			shifter32 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Multiplier 8-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Multiplier 8-bit"),temp.length()-sizeof("Multiplier 8-bit"));
-          			mult8 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Multiplier 16-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Multiplier 16-bit"),temp.length()-sizeof("Multiplier 16-bit"));
-          			mult16 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Multiplier 32-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Multiplier 32-bit"),temp.length()-sizeof("Multiplier 32-bit"));
-          			mult32 = std::stoi(temp,nullptr,0);
-        		}
-			else if(cfgtxt[i].find("Counter 16-bit")!=string::npos)
-			{
-          			temp.assign(cfgtxt[i],sizeof("Counter 16-bit"),temp.length()-sizeof("Counter 16-bit"));
-          			counter16 = std::stoi(temp,nullptr,0);
-        		}
+            		temp.assign(cfgtxt[i],sizeof("Application_Scale"),temp.length()-sizeof("Application_Scale")); 
+			AppScale = std::stoi (temp,nullptr,0);
 		}
+		else if(cfgtxt[i].find("Weight_Polarity")!=string::npos)
+		{
+            		temp.assign(cfgtxt[i],sizeof("Weight_Polarity"),temp.length()-sizeof("Weight_Polarity")); 
+			WeightPolar = std::stoi (temp,nullptr,0);
+		}
+		// max cell and min cell no longer defined here
+   		else if(cfgtxt[i].find("Bit_Levels")!=string::npos)
+		{
+           		temp.assign(cfgtxt[i],sizeof("Bit_Levels"),temp.length()-sizeof("Bit_Levels")); 
+			minBtLv = std::stoi (temp,nullptr,0);
+			maxBtLv=minBtLv;
+		}
+		else if(cfgtxt[i].find("Min_Crossbar_Size")!=string::npos)
+		{
+            		temp.assign(cfgtxt[i],sizeof("Min_Crossbar_Size"),temp.length()-sizeof("Min_Crossbar_Size")); 
+			minXbarSize = std::stoi(temp,nullptr,0);
+		}
+		else if(cfgtxt[i].find("Max_Crossbar_Size")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Max_Crossbar_Size"),temp.length()-sizeof("Max_Crossbar_Size")); 
+			maxXbarSize = std::stoi(temp,nullptr,0);
+		}
+		else if(cfgtxt[i].find("Pipeline")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Pipeline"),temp.length()-sizeof("Pipeline"));
+          		Pipeline = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("MUX 1:4")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 4:1"),temp.length()-sizeof("MUX 4:1"));
+          		MUX4 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("MUX 1:8")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 8:1"),temp.length()-sizeof("MUX 8:1"));
+          		MUX8 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("MUX 1:16")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 16:1"),temp.length()-sizeof("MUX 16:1"));
+          		MUX16 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("MUX 1:32")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 32:1"),temp.length()-sizeof("MUX 32:1"));
+          		MUX32 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("MUX 1:64")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 64:1"),temp.length()-sizeof("MUX 64:1"));
+          		MUX64 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("DEMUX 1:4")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 1:4"),temp.length()-sizeof("MUX 1:4"));
+          		DEMUX4 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("DEMUX 1:8")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 1:8"),temp.length()-sizeof("MUX 1:8"));
+          		DEMUX8 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("DEMUX 1:16")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 1:16"),temp.length()-sizeof("MUX 1:16"));
+          		DEMUX16 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("DEMUX 1:32")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 1:32"),temp.length()-sizeof("MUX 1:32"));
+          		DEMUX32 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("DEMUX 1:64")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("MUX 1:64"),temp.length()-sizeof("MUX 1:64"));
+          		DEMUX64 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Ripple Carry Adder 8-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Ripple Carry Adder 8-bit"),temp.length()-sizeof("Ripple Carry Adder 8-bit"));
+          		RPC8 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Ripple Carry Adder 16-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Ripple Carry Adder 16-bit"),temp.length()-sizeof("Ripple Carry Adder 16-bit"));
+          		RPC16 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Ripple Carry Adder 32-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Ripple Carry Adder 32-bit"),temp.length()-sizeof("Ripple Carry Adder 32-bit"));
+          		RPC32 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Shifter 8-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Shifter 8-bit"),temp.length()-sizeof("Shifter 8-bit"));
+          		shifter8 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Shifter 16-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Shifter 16-bit"),temp.length()-sizeof("Shifter 16-bit"));
+          		shifter16 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Shifter 32-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Shifter 32-bit"),temp.length()-sizeof("Shifter 32-bit"));
+          		shifter32 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Multiplier 8-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Multiplier 8-bit"),temp.length()-sizeof("Multiplier 8-bit"));
+          		mult8 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Multiplier 16-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Multiplier 16-bit"),temp.length()-sizeof("Multiplier 16-bit"));
+          		mult16 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Multiplier 32-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Multiplier 32-bit"),temp.length()-sizeof("Multiplier 32-bit"));
+          		mult32 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Counter 16-bit")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Counter 16-bit"),temp.length()-sizeof("Counter 16-bit"));
+          		counter16 = std::stoi(temp,nullptr,0);
+        	}
+		else if(cfgtxt[i].find("Subaddon Components")!=string::npos)
+		{
+          		temp.assign(cfgtxt[i],sizeof("Subaddon Components"),temp.length()-sizeof("Subaddon Components"));
+          		subCompNum = std::stoi(temp,nullptr,0);
+			int n=0; 
+			for(int k=0; k<subCompNum; k++)
+			{
+				temp.assign(cfgtxt[i+n+1],sizeof("Area"),temp.length()-sizeof("Area"));
+				subArea[k] = std::stoi(temp,nullptr,0);
+				temp.assign(cfgtxt[i+n+2],sizeof("Latency"),temp.length()-sizeof("Latency"));
+				subLatency[k] = std::stoi(temp,nullptr,0);
+				temp.assign(cfgtxt[i+n+3],sizeof("Leakage Power"),temp.length()-sizeof("Leakage Power"));
+				subLeakPw[k] = std::stoi(temp,nullptr,0);
+				temp.assign(cfgtxt[i+n+4],sizeof("Dynamic Power"),temp.length()-sizeof("Dynamic Power"));
+				subDymPw[k] = std::stoi(temp,nullptr,0);
+				n = n+4;
+			}//for
+        	}//else if 
+	}//for 
 	
 
 	ComputationTime = new int[AppScale];
