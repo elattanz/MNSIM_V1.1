@@ -50,7 +50,7 @@ public:
 
 	/* Functions */
 	void PrintProperty();
-	void Initialize(int _featureSizeInNano, DeviceRoadmap _deviceRoadmap);
+	void Initialize(DeviceRoadmap _deviceRoadmap);
 	void InterpolateWith(Technology rhs, double _alpha);
 
 	/* Properties */
