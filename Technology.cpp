@@ -47,7 +47,7 @@ Technology::~Technology() {
 	// TODO Auto-generated destructor stub
 }
 
-void Technology::Initialize(int DeviceRoadmap _deviceRoadmap) 
+void Technology::Initialize(DeviceRoadmap _deviceRoadmap) 
 {
 	if (initialized)
 		cout << "Warning: Already initialized!" << endl;
