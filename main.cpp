@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 	*/
 
 	technology = new Technology();
-	technology->Initialize(inputParameter->TranTech, HP/*inputParameter->deviceRoadmap*/);
+	technology->Initialize(HP/*inputParameter->deviceRoadmap*/);
 
 	Technology techHigh;
 	double alpha = 0;
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 	//} 
 	//else if (inputParameter->TranTech >= 32) { // 32 nm < technology node <= 45 nm
 		
-	techHigh.Initialize(45, HP/*inputParameter->deviceRoadmap*/);
+	techHigh.Initialize(HP/*inputParameter->deviceRoadmap*/);
 	alpha = (inputParameter->TranTech - 32.0) / 13;
 	//} 
 
