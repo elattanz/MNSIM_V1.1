@@ -19,8 +19,8 @@ InputParameter::InputParameter() {
 	maxAdPos = 1;
 	minBtLv = 0;
 	maxBtLv = 16;
-	//minRRang = 1000;
-	//maxRRang = 1000000;
+	minRRang = 1000;
+	maxRRang = 1000000;
 	minAdder = 1;
 	maxAdder = 1;
 	minLine = 22;
