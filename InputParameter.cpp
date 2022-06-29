@@ -276,78 +276,96 @@ void InputParameter::ReadInputParameterFromFile(string filename){
 	int layer_type = 0;
 	int layer_begin = config_end;//begin to search from the end of the config
 	int layer_end = config_end;
-	for (i=0;i<AppScale;i++){
+	for (i=0;i<AppScale;i++)
+	{
 		flag = true;
 		j = layer_end;
-		while(flag){
-			if(cfgtxt[j].find("Layer"+to_string(i+1))!=string::npos){
+		while(flag)
+		{
+			if(cfgtxt[j].find("Layer"+to_string(i+1))!=string::npos)
+			{
 				layer_begin = j;
-				while(1){
-                	if (cfgtxt[j].find("}")!=string::npos){
-    					layer_end = j;
-                    	break;
-                	}
-                	else j++;
-    			}
-    			flag = false;
-			}
+				while(1)
+				{
+                			if (cfgtxt[j].find("}")!=string::npos)
+					{
+    						layer_end = j;
+                    				break;
+                			}//if
+					else j++;
+				}//while
+    				flag = false;
+			}//if
 			else
 				j++;
-		}
+		}//while
 		layer_type = 0;
-		for(j=layer_begin;j<layer_end;j++){
-            //cout<<"layer"<<i<<"FC"<<cfgtxt[j].find("FC")<<endl;
-            //cout<<"layer"<<i<<"Conv"<<cfgtxt[j].find("Conv")<<endl;
-            //cout<<endl;
-			if(cfgtxt[j].find("Conv")!=string::npos){//this layer is a conv layer
+		for(j=layer_begin;j<layer_end;j++)
+		{
+           	 //cout<<"layer"<<i<<"FC"<<cfgtxt[j].find("FC")<<endl;
+           	 //cout<<"layer"<<i<<"Conv"<<cfgtxt[j].find("Conv")<<endl;
+          	  //cout<<endl;
+			if(cfgtxt[j].find("Conv")!=string::npos)
+			{//this layer is a conv layer
 				layer_type = 1;
 				break;
 			}
-			else if(cfgtxt[j].find("FC")!=string::npos){
+			else if(cfgtxt[j].find("FC")!=string::npos)
+			{
 				layer_type = 2;
 				break;
 			}
-
-		}
-		if(layer_type == 1){
-			for(j=layer_begin;j<=layer_end;j++){
-				if(cfgtxt[j].find("Outputsize")!=string::npos){
+		}//for
+		if(layer_type == 1)
+		{
+			for(j=layer_begin;j<=layer_end;j++)
+			{
+				if(cfgtxt[j].find("Outputsize")!=string::npos)
+				{
 					temp.assign(cfgtxt[j],sizeof("Outputsize"),temp.length()-sizeof("Outputsize")); 
 					temp_outputsize = std::stoi(temp,nullptr,0);
 				}
-				else if(cfgtxt[j].find("Kernelsize")!=string::npos){
+				else if(cfgtxt[j].find("Kernelsize")!=string::npos)
+				{
 					temp.assign(cfgtxt[j],sizeof("Kernelsize"),temp.length()-sizeof("Kernelsize")); 
 					temp_kernelsize = std::stoi(temp,nullptr,0);
 				}
-				else if(cfgtxt[j].find("Inputchannel")!=string::npos){
+				else if(cfgtxt[j].find("Inputchannel")!=string::npos)
+				{
 					temp.assign(cfgtxt[j],sizeof("Inputchannel"),temp.length()-sizeof("Inputchannel")); 
 					temp_inputchannel = std::stoi(temp,nullptr,0);
 				}
-				else if(cfgtxt[j].find("Outputchannel")!=string::npos){
+				else if(cfgtxt[j].find("Outputchannel")!=string::npos)
+				{
 					temp.assign(cfgtxt[j],sizeof("Outputchannel"),temp.length()-sizeof("Outputchannel")); 
 					temp_outputchannel = std::stoi(temp,nullptr,0);
-				}
-			}
+				} //else if
+			} //for
 			ComputationTime[i] = temp_outputsize*temp_outputsize;
 			OutputChannel[i] = temp_outputchannel;
 			InputLength[i] = temp_kernelsize*temp_kernelsize*temp_inputchannel;
-		}
-		else if(layer_type == 2){
-			for(j=layer_begin;j<=layer_end;j++){
-				if(cfgtxt[j].find("Inputlength")!=string::npos){
+		} //if
+		else if(layer_type == 2)
+		{
+			for(j=layer_begin;j<=layer_end;j++)
+			{
+				if(cfgtxt[j].find("Inputlength")!=string::npos)
+				{
 					temp.assign(cfgtxt[j],sizeof("Inputlength"),temp.length()-sizeof("Inputlength")); 
 					temp_inputlength = std::stoi(temp,nullptr,0);
 				}
-				else if(cfgtxt[j].find("Outputlength")!=string::npos){
+				else if(cfgtxt[j].find("Outputlength")!=string::npos)
+				{
 					temp.assign(cfgtxt[j],sizeof("Outputlength"),temp.length()-sizeof("Outputlength")); 
 					temp_outputlength = std::stoi(temp,nullptr,0);
 				}
-			}
+			} //for
 			ComputationTime[i] = 1;
 			OutputChannel[i] = temp_outputlength;
 			InputLength[i] = temp_inputlength;
-		}
+		} //else if
 		else
 			;
 	}
+}
     
