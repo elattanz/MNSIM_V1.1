@@ -84,44 +84,89 @@ void InputParameter::ReadInputParameterFromFile(string filename){
         i++;
     }
 
-	// simplified
-	for (i=(config_begin+1);i<=config_end;i++)
+	
+	if (sim_mode == 0)
 	{
-       		if(cfgtxt[i].find("Application_Scale")!=string::npos)
+		for (i=(config_begin+1);i<=config_end;i++)
 		{
-            		temp.assign(cfgtxt[i],sizeof("Application_Scale"),temp.length()-sizeof("Application_Scale")); 
-			AppScale = std::stoi (temp,nullptr,0);
+       			if(cfgtxt[i].find("Application_Scale")!=string::npos)
+			{
+            			temp.assign(cfgtxt[i],sizeof("Application_Scale"),temp.length()-sizeof("Application_Scale")); 
+				AppScale = std::stoi (temp,nullptr,0);
+			}
+			else if(cfgtxt[i].find("Weight_Polarity")!=string::npos)
+			{
+            			temp.assign(cfgtxt[i],sizeof("Weight_Polarity"),temp.length()-sizeof("Weight_Polarity")); 
+				WeightPolar = std::stoi (temp,nullptr,0);
+			}
+			// max cell and min cell no longer defined here
+   			else if(cfgtxt[i].find("Bit_Levels")!=string::npos)
+			{
+            			temp.assign(cfgtxt[i],sizeof("Bit_Levels"),temp.length()-sizeof("Bit_Levels")); 
+				minBtLv = std::stoi (temp,nullptr,0);
+				maxBtLv=minBtLv;
+			}
+			else if(cfgtxt[i].find("Min_Crossbar_Size")!=string::npos)
+			{
+            			temp.assign(cfgtxt[i],sizeof("Min_Crossbar_Size"),temp.length()-sizeof("Min_Crossbar_Size")); 
+				minXbarSize = std::stoi(temp,nullptr,0);
+			}
+			else if(cfgtxt[i].find("Max_Crossbar_Size")!=string::npos)
+			{
+          			temp.assign(cfgtxt[i],sizeof("Max_Crossbar_Size"),temp.length()-sizeof("Max_Crossbar_Size")); 
+				maxXbarSize = std::stoi(temp,nullptr,0);
+			}
+			else if(cfgtxt[i].find("Pipeline")!=string::npos)
+			{
+          			temp.assign(cfgtxt[i],sizeof("Pipeline"),temp.length()-sizeof("Pipeline"));
+          			Pipeline = std::stoi(temp,nullptr,0);
+        		}
 		}
-		else if(cfgtxt[i].find("Weight_Polarity")!=string::npos)
+	}//if
+	else if (sim_mode == 1)
+	{
+		for (i=(config_begin+1);i<=config_end;i++)
 		{
-            		temp.assign(cfgtxt[i],sizeof("Weight_Polarity"),temp.length()-sizeof("Weight_Polarity")); 
-			WeightPolar = std::stoi (temp,nullptr,0);
+       			if(cfgtxt[i].find("Application_Scale")!=string::npos)
+			{
+            			temp.assign(cfgtxt[i],sizeof("Application_Scale"),temp.length()-sizeof("Application_Scale")); 
+				AppScale = std::stoi (temp,nullptr,0);
+			}
+			else if(cfgtxt[i].find("Weight_Polarity")!=string::npos)
+			{
+            			temp.assign(cfgtxt[i],sizeof("Weight_Polarity"),temp.length()-sizeof("Weight_Polarity")); 
+				WeightPolar = std::stoi (temp,nullptr,0);
+			}
+			// max cell and min cell no longer defined here
+   			else if(cfgtxt[i].find("Bit_Levels")!=string::npos)
+			{
+            			temp.assign(cfgtxt[i],sizeof("Bit_Levels"),temp.length()-sizeof("Bit_Levels")); 
+				minBtLv = std::stoi (temp,nullptr,0);
+				maxBtLv=minBtLv;
+			}
+			else if(cfgtxt[i].find("Min_Crossbar_Size")!=string::npos)
+			{
+            			temp.assign(cfgtxt[i],sizeof("Min_Crossbar_Size"),temp.length()-sizeof("Min_Crossbar_Size")); 
+				minXbarSize = std::stoi(temp,nullptr,0);
+			}
+			else if(cfgtxt[i].find("Max_Crossbar_Size")!=string::npos)
+			{
+          			temp.assign(cfgtxt[i],sizeof("Max_Crossbar_Size"),temp.length()-sizeof("Max_Crossbar_Size")); 
+				maxXbarSize = std::stoi(temp,nullptr,0);
+			}
+			else if(cfgtxt[i].find("Pipeline")!=string::npos)
+			{
+          			temp.assign(cfgtxt[i],sizeof("Pipeline"),temp.length()-sizeof("Pipeline"));
+          			Pipeline = std::stoi(temp,nullptr,0);
+        		}
+			else if(cfgtxt[i].find("MUX 1:4")!=string::npos)
+			{
+          			temp.assign(cfgtxt[i],sizeof("MUX 1:4"),temp.length()-sizeof("MUX 1:4"));
+          			//Pipeline = std::stoi(temp,nullptr,0);
+        		}
+			
 		}
-		// max cell and min cell no longer defined here
-   		else if(cfgtxt[i].find("Bit_Levels")!=string::npos)
-		{
-            		temp.assign(cfgtxt[i],sizeof("Bit_Levels"),temp.length()-sizeof("Bit_Levels")); 
-			minBtLv = std::stoi (temp,nullptr,0);
-			maxBtLv=minBtLv;
-		}
-		else if(cfgtxt[i].find("Min_Crossbar_Size")!=string::npos)
-		{
-            		temp.assign(cfgtxt[i],sizeof("Min_Crossbar_Size"),temp.length()-sizeof("Min_Crossbar_Size")); 
-			minXbarSize = std::stoi(temp,nullptr,0);
-		}
-		else if(cfgtxt[i].find("Max_Crossbar_Size")!=string::npos)
-		{
-          		temp.assign(cfgtxt[i],sizeof("Max_Crossbar_Size"),temp.length()-sizeof("Max_Crossbar_Size")); 
-			maxXbarSize = std::stoi(temp,nullptr,0);
-		}
-		else if(cfgtxt[i].find("Pipeline")!=string::npos)
-		{
-          		temp.assign(cfgtxt[i],sizeof("Pipeline"),temp.length()-sizeof("Pipeline"));
-          		Pipeline = std::stoi(temp,nullptr,0);
-        	}
-		// if sim_mode = 1, code will keep reading for the other components (ex, MUX, DEMUX, shifters, etc.)
-		// customized components will be added here
-	}
+	}//if
 
 	ComputationTime = new int[AppScale];
 	OutputChannel = new int [AppScale];
