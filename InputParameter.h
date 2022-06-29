@@ -48,6 +48,26 @@ public:
 	string WriteMth;
 	string *cfgtxt;
 	int Pipeline;
+	int MUX4;
+	int MUX8;
+	int MU16;
+	int MUX32;
+	int MUX64;
+	int DEMUX4;
+	int DEMUX8;
+	int DEMUX16;
+	int DEMUX32;
+	int DEMUX64;
+	int RPC8;
+	int RPC16;
+	int RPC32;
+	int shiter8;
+	int shifter16; 
+	int shifter32;
+	int mult8;
+	int mult16;
+	int mult32;
+	int counter32;
 
 };
 
