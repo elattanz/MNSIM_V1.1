@@ -61,13 +61,13 @@ public:
 	int RPC8;
 	int RPC16;
 	int RPC32;
-	int shiter8;
+	int shifter8;
 	int shifter16; 
 	int shifter32;
 	int mult8;
 	int mult16;
 	int mult32;
-	int counter32;
+	int counter16;
 
 };
 
