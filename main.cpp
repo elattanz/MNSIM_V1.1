@@ -75,6 +75,26 @@ int main(int argc, char *argv[])
     else
     	action_type = 0;
 	*/
+	
+	    //Unused part
+	switch (inputParameter->Target_Output[0]) {
+		case 'a':
+				target = 1;break;
+		case 'A':
+				target = 1;break;
+		case 'e':
+				target = 2;break;
+		case 'E':
+				target = 2;break;
+		case 'l':
+				target = 3;break;
+		case 'L':
+				target = 3;break;
+		case 'p':
+				target = 4;break;
+		case 'P':
+				target = 4;break;
+	}
 
 	technology = new Technology();
 	technology->Initialize(HP/*inputParameter->deviceRoadmap*/);
