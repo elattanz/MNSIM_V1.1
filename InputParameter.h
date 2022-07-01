@@ -38,7 +38,7 @@ public:
 	int *OutputChannel;
 	int *InputLength;
 	string SimLv;
-    	//string Target_Output;
+    	string Target_Output;
 	//string Application;
 	//string Action_type;
 	int WeightPolar;
