@@ -69,8 +69,7 @@ public:
 	int mult32;
 	int counter16;
 	int subCompNum;
-	bool sim_mode = 0; //0 for electronic, 1 for photonic
-   	double subArea[15]; // can add up to 16 extra components 
+	double subArea[15]; // can add up to 16 extra components 
     	double subLatency[15];
     	double subLeakPw[15];
     	double subDymPw[15];
