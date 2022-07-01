@@ -12,6 +12,7 @@
 
 void determin_sig(int xbarsize,int adderposition,int sig_bit,int cell_bit,int adposition);
 void determin_net(int xbarsize,int rowsize,int columnsize,int signalsize);
+void determin_net_P(int xbarsize,int rowsize,int columnsize);
 double calWL(int tech);
 double adsize(int tech,int sig_bit);
 double dasize(int tech,int sig_bit);
@@ -34,7 +35,7 @@ double cal_da_p(int tech,int sig_bit);
 double cal_decoder_p(int tech,int celltype,int xbarsize,int action_type);
 void periphery_area(Technology technology,int xbarsize,int netrow,int netcolumn,int adderposition,int pulseposition,int sig_bit,int application);
 double neuronsize(int tech,int sig_bit,int application);
-void periphery_latency_c(Technology technology,int netrow,int adderposition,int pulseposition,int sig_bit,int application);//�ⲿ��ʱ
+void periphery_latency_c(Technology technology,int netrow,int adderposition,int pulseposition,int sig_bit,int application);//Íâ²¿ÑÓÊ±
 double cal_neuron_l(int tech,int sig_bit,int application);
 void periphery_power_c(Technology tech,int xbarsize,int netrow,int netcolumn, int adderposition,int pulseposition,int sig_bit,int application,int inputlength, int outputchannel);
 double cal_neuron_p(int tech,int sig_bit,int application,int netrow, int netcolumn, int inputlength, int outputchannel);
