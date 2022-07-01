@@ -245,6 +245,30 @@ if (sim_mode == 0)
 		optresult[i] = AAAestrslt[mincount][i+1];
 	for (int i=6;i<17;i++)
 		optresult[i] = AAAestrslt[mincount][i+2];
+	
+	ofstream fout;
+	fout.open(outputFileName,ios::out);
+	if(!fout.is_open())
+		cout<<"result.txt cannot be found!"<<endl;
+	else {
+		fout<<"xbarnumber:"<<optresult[0]<<endl;
+		fout<<"area:"<<optresult[1]<<endl;
+		fout<<"energy:"<<optresult[2]<<endl;
+		fout<<"latency:"<<optresult[3]<<endl;
+		fout<<"power:"<<optresult[4]<<endl;
+		//fout<<"accuracy:"<<optresult[5]<<endl;
+		fout<<"area_multi:"<<optresult[6]<<endl;
+		fout<<"power_multi:"<<optresult[7]<<endl;
+		fout<<"latency_multi:"<<optresult[8]<<endl;
+		fout<<"read_sep:"<<optresult[9]<<endl;
+		fout<<"adposition:"<<optresult[10]<<endl;
+		fout<<"bit_level:"<<optresult[11]<<endl;
+		fout<<"adderposition:"<<optresult[12]<<endl;
+		fout<<"pulseposition:"<<optresult[13]<<endl;
+		fout<<"linetech:"<<optresult[14]<<endl;
+		fout<<"celltype:"<<optresult[15]<<endl;
+		fout<<"xbarsize:"<<optresult[16]<<endl;
+	}
    }// if 
    else if (sim_mode == 1)
    {
@@ -313,13 +337,12 @@ if (sim_mode == 0)
 		}
 
 	}
-	double optresult[17];
+	double optresult[9];
 	optresult[0] = AAAestrslt[mincount][0];
 	for (int i=1;i<6;i++)
 		optresult[i] = AAAestrslt[mincount][i+1];
-	for (int i=6;i<17;i++)
+	for (int i=6;i<9;i++)
 		optresult[i] = AAAestrslt[mincount][i+2];
-   } // elseif 
 	
 	
 	ofstream fout;
@@ -330,21 +353,14 @@ if (sim_mode == 0)
 		fout<<"xbarnumber:"<<optresult[0]<<endl;
 		fout<<"area:"<<optresult[1]<<endl;
 		fout<<"energy:"<<optresult[2]<<endl;
-		fout<<"latency:"<<optresult[3]<<endl;
-		fout<<"power:"<<optresult[4]<<endl;
-		//fout<<"accuracy:"<<optresult[5]<<endl;
-		fout<<"area_multi:"<<optresult[6]<<endl;
-		fout<<"power_multi:"<<optresult[7]<<endl;
-		fout<<"latency_multi:"<<optresult[8]<<endl;
-		fout<<"read_sep:"<<optresult[9]<<endl;
-		fout<<"adposition:"<<optresult[10]<<endl;
-		fout<<"bit_level:"<<optresult[11]<<endl;
-		fout<<"adderposition:"<<optresult[12]<<endl;
-		fout<<"pulseposition:"<<optresult[13]<<endl;
-		fout<<"linetech:"<<optresult[14]<<endl;
-		fout<<"celltype:"<<optresult[15]<<endl;
-		fout<<"xbarsize:"<<optresult[16]<<endl;
+		fout<<"latency:"<<optresult[4]<<endl;
+		fout<<"power:"<<optresult[5]<<endl;
+		fout<<"read_sep:"<<optresult[6]<<endl;
+		fout<<"bit_level:"<<optresult[7]<<endl;
+		fout<<"linetech:"<<optresult[8]<<endl;
+		fout<<"xbarsize:"<<optresult[9]<<endl;
 	}
+     } // elseif 
 	
 
 	toc=clock();
