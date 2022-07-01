@@ -275,7 +275,8 @@ if (sim_mode == 0)
 							// area = crossbar area + periphery area
 							// latency = crossbar latency + periphery latency
 							// power = crossbar power + crossbar latency
-							//energy = utilization * power_u * latency_u * netrow * netcolumn + power_l * latency_l + power_p * latency_p;
+							// ***** There is a good change this energy calculation won't be accurate because we did not add the read and write power of PCM
+							//energy = (utilization*crossbar power * crossbar latency) + (peripherary power * peripherary latency);
 							equal_P(netlevel,area,energy,latency,power,read_sep,bit_level,linetech,xbarsize);
 							count_my = count_my + 1;
 						}//for				
