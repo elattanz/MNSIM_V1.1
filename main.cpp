@@ -132,66 +132,117 @@ int main(int argc, char *argv[])
 	AAestrslt = new double* [row];
 	for(int i =0; i < row; i++)
 		AAestrslt[i] = new double [19];
-    for (double adposition=max(0,inputParameter->minAdPos);adposition<=min(1,inputParameter->maxAdPos);adposition++) 
-    {
+if (sim_mode == 0)
+{
+    	for (double adposition=max(0,inputParameter->minAdPos);adposition<=min(1,inputParameter->maxAdPos);adposition++) 
+    	{
+        	for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
+		{
+            		for (double adderposition = max(0,inputParameter->minAdder);adderposition<=min(1,inputParameter->maxAdder);adderposition++) 
+	    		{
+                		for (double linetech = 90;linetech<=90;linetech++) 
+				{    //[18,22,28,36,45,65,90];
+                        		for (double xbarsize = inputParameter->minXbarSize;xbarsize<=inputParameter->maxXbarSize;xbarsize*=2) 
+					{   //[4,8,16,32,64,128,256]%,512,1024]
+                            			for (double read_sep = 1;read_sep<=128;read_sep++)
+			    			{   //xbarsize/128 : xbarsize/128 : xbarsize%8:8:xbarsize
+                                			if (xbarsize<inputParameter->minXbarSize || xbarsize > inputParameter->maxXbarSize)
+							{
+                                    				cout<<"error:xbarsize over the limit"<<endl;
+							}
+                                			else
+							{
+								for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) 
+								{ //-1
+								celltype = 1;
+								determin_sig(xbarsize,adderposition,inputParameter->sig_bit,cell_bit,adposition);
+								determin_net(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1],signalsize);		
+								unit_area_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->rramtech,read_sep);	
+								unit_latency_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,read_sep);
+								unit_power_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,application,inputParameter->maxRRang,netrow,xbar_latency,adda_latency,adder_latency,decoder_latency,write_latency,read_latency,read_sep);
+								periphery_area(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application);
+								periphery_latency_c(*technology,netrow, adderposition,pulseposition,inputParameter->sig_bit,application); 
+								periphery_power_c(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);
+								//accuracy_c(xbarsize,linetech,inputParameter->sig_bit,cell_bit,inputParameter->maxRRang,input_err[(int)netlevel-1]);	
+								//input_err[(int)netlevel] = accuracy;
+								area = area_u * netrow * netcolumn + area_l + area_p ;//+ area_r + area_w;
+								energy = utilization * power_u * latency_u * netrow * netcolumn + power_l * latency_l + power_p * latency_p;
+								latency = latency = latency_u + latency_l + latency_p;
+								latency_multi = latency_u;
+								power_multi = utilization * power_u * netrow * netcolumn;
+								//power_flags = power_flags * netrow * netcolumn;
+								area_multi = area_u * netrow * netcolumn;
+								power = utilization * power_u  * netrow * netcolumn + power_l  + power_p ;
+								equal(netlevel,area,energy,latency,power,accuracy,area_multi,power_multi,latency_multi,read_sep,adposition,bit_level,adderposition,pulseposition,linetech,celltype,xbarsize);
+								//if (accuracy < minerr) 
+								//{
+								//	minerr = accuracy;
+								//	err_count = count_my;
+								//}
+								//count_my = count_my + 1;
+								}//for				
+							}//else
+            		    			}//for
+        				}//for
+    		    		}//for
+    			}//for
+	   	 
+		}//for
+   	 }//for 
+   }// if 
+   else if (sim_mode == 1)
+   {
         for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
 	{
-            for (double adderposition = max(0,inputParameter->minAdder);adderposition<=min(1,inputParameter->maxAdder);adderposition++) 
-	    {
                 for (double linetech = 90;linetech<=90;linetech++) 
 		{    //[18,22,28,36,45,65,90];
-                    for (double celltype = 1;celltype<=1;celltype++) 
-		    {
-                        //pulseposition = 0;
                         for (double xbarsize = inputParameter->minXbarSize;xbarsize<=inputParameter->maxXbarSize;xbarsize*=2) 
 			{   //[4,8,16,32,64,128,256]%,512,1024]
-                            for (double read_sep = 1;read_sep<=128;read_sep++)
-			    {   //xbarsize/128 : xbarsize/128 : xbarsize%8:8:xbarsize
-                                if (xbarsize<inputParameter->minXbarSize || xbarsize > inputParameter->maxXbarSize)
-				{
-                                    cout<<"error:xbarsize over the limit"<<endl;
-				}
-                                else
-				{
-					for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) 
-					{ //-1
-						//if (bit_level != 0)
-						//cell_bit = bit_level;
-						//calculate bandwidth
-						determin_sig(xbarsize,adderposition,inputParameter->sig_bit,cell_bit,adposition);
-						determin_net(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1],signalsize);		
-						unit_area_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->rramtech,read_sep);	
-						unit_latency_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,read_sep);
-						unit_power_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,application,inputParameter->maxRRang,netrow,xbar_latency,adda_latency,adder_latency,decoder_latency,write_latency,read_latency,read_sep);
-						periphery_area(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application);
-						periphery_latency_c(*technology,netrow, adderposition,pulseposition,inputParameter->sig_bit,application); 
-						periphery_power_c(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);
-						//accuracy_c(xbarsize,linetech,inputParameter->sig_bit,cell_bit,inputParameter->maxRRang,input_err[(int)netlevel-1]);	
-						//input_err[(int)netlevel] = accuracy;
-						area = area_u * netrow * netcolumn + area_l + area_p ;//+ area_r + area_w;
-						energy = utilization * power_u * latency_u * netrow * netcolumn + power_l * latency_l + power_p * latency_p;
-						latency = latency = latency_u + latency_l + latency_p;
-						latency_multi = latency_u;
-						power_multi = utilization * power_u * netrow * netcolumn;
+                            	for (double read_sep = 1;read_sep<=128;read_sep++)
+			    	{   //xbarsize/128 : xbarsize/128 : xbarsize%8:8:xbarsize
+                                	if (xbarsize<inputParameter->minXbarSize || xbarsize > inputParameter->maxXbarSize)
+					{
+                                    		cout<<"error:xbarsize over the limit"<<endl;
+					}
+                                	else
+					{
+						for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) 
+						{ //-1
+							//if (bit_level != 0)
+							//cell_bit = bit_level;
+							//calculate bandwidth
+							//determin_sig(xbarsize,adderposition,inputParameter->sig_bit,cell_bit,adposition);
+							determin_net(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1],signalsize);		
+							unit_area_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->rramtech,read_sep);	
+							unit_latency_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,read_sep);
+							unit_power_c(*technology,celltype,xbarsize,adposition,adderposition,pulseposition,action_type,inputParameter->sig_bit,application,inputParameter->maxRRang,netrow,xbar_latency,adda_latency,adder_latency,decoder_latency,write_latency,read_latency,read_sep);
+							periphery_area(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application);
+							periphery_latency_c(*technology,netrow, adderposition,pulseposition,inputParameter->sig_bit,application); 
+							periphery_power_c(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);
+							//accuracy_c(xbarsize,linetech,inputParameter->sig_bit,cell_bit,inputParameter->maxRRang,input_err[(int)netlevel-1]);	
+							//input_err[(int)netlevel] = accuracy;
+							area = area_u * netrow * netcolumn + area_l + area_p ;//+ area_r + area_w;
+							//energy = utilization * power_u * latency_u * netrow * netcolumn + power_l * latency_l + power_p * latency_p;
+							latency = latency = latency_u + latency_l + latency_p;
+							latency_multi = latency_u;
+							power_multi = utilization * power_u * netrow * netcolumn;
 							//power_flags = power_flags * netrow * netcolumn;
-						area_multi = area_u * netrow * netcolumn;
-						power = utilization * power_u  * netrow * netcolumn + power_l  + power_p ;
-						equal(netlevel,area,energy,latency,power,accuracy,area_multi,power_multi,latency_multi,read_sep,adposition,bit_level,adderposition,pulseposition,linetech,celltype,xbarsize);
-						//if (accuracy < minerr) 
-						//{
-						//	minerr = accuracy;
-						//	err_count = count_my;
-						//}
-						//count_my = count_my + 1;
-					}//for				
-				}//else
-            		    }//for
-        		}//for
-    		    }//for
-    		}//for
-	    }//for
-	}//for
-    }//for 
+							area_multi = area_u * netrow * netcolumn;
+							power = utilization * power_u  * netrow * netcolumn + power_l  + power_p ;
+							equal(netlevel,area,energy,latency,power,accuracy,area_multi,power_multi,latency_multi,read_sep,adposition,bit_level,adderposition,pulseposition,linetech,celltype,xbarsize);
+							//if (accuracy < minerr) 
+							//{
+							//	minerr = accuracy;
+							//	err_count = count_my;
+							//}
+							//count_my = count_my + 1;
+						}//for				
+					}//else
+            		    	}//for
+    		    	}//for
+	   	 }//for
+   	 }//for 
+   }// else if
 
 
 
