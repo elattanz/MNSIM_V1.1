@@ -25,9 +25,16 @@ void determin_sig(int xbarsize,int adderposition,int sig_bit,int cell_bit,int ad
 }
 
 void determin_net(int xbarsize,int rowsize,int columnsize,int signalsize){
-	netcolumn = ceil((double)columnsize/xbarsize);
+    netcolumn = ceil((double)columnsize/xbarsize);
     netrow = ceil((double)rowsize/xbarsize);
     bandwidth = signalsize * netrow;
+    utilization = (double)columnsize*(double)rowsize/((double)netrow*(double)netcolumn*(double)xbarsize*(double)xbarsize);
+}
+
+void determin_net_P(int xbarsize,int rowsize,int columnsize)
+{
+    netcolumn = ceil((double)columnsize/xbarsize);
+    netrow = ceil((double)rowsize/xbarsize);
     utilization = (double)columnsize*(double)rowsize/((double)netrow*(double)netcolumn*(double)xbarsize*(double)xbarsize);
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
