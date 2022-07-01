@@ -114,6 +114,10 @@ void InputParameter::ReadInputParameterFromFile(string filename){
             		temp.assign(cfgtxt[i],sizeof("Application_Scale"),temp.length()-sizeof("Application_Scale")); 
 			AppScale = std::stoi (temp,nullptr,0);
 		}
+		else if(cfgtxt[i].find("Target_Outputs ")!=string::npos)
+		{
+            		Target_Output.assign(cfgtxt[i],sizeof("Target_Outputs "),cfgtxt[i].length()-sizeof("Target_Outputs"));
+		}
 		else if(cfgtxt[i].find("Weight_Polarity")!=string::npos)
 		{
             		temp.assign(cfgtxt[i],sizeof("Weight_Polarity"),temp.length()-sizeof("Weight_Polarity")); 
@@ -141,6 +145,7 @@ void InputParameter::ReadInputParameterFromFile(string filename){
           		temp.assign(cfgtxt[i],sizeof("Pipeline"),temp.length()-sizeof("Pipeline"));
           		Pipeline = std::stoi(temp,nullptr,0);
         	}
+		/*
 		else if(cfgtxt[i].find("MUX_4:1")!=string::npos)
 		{
           		temp.assign(cfgtxt[i],sizeof("MUX_4:1"),temp.length()-sizeof("MUX_4:1"));
@@ -241,6 +246,7 @@ void InputParameter::ReadInputParameterFromFile(string filename){
           		temp.assign(cfgtxt[i],sizeof("Counter_16_bit"),temp.length()-sizeof("Counter_16_bit"));
           		counter16 = std::stoi(temp,nullptr,0);
         	}
+		*/
 		else if(cfgtxt[i].find("Subaddon_Components")!=string::npos)
 		{
           		temp.assign(cfgtxt[i],sizeof("Subaddon_Components"),temp.length()-sizeof("Subaddon_Components"));
