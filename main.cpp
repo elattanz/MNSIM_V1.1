@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 	AAestrslt = new double* [row];
 	for(int i =0; i < row; i++)
 		AAestrslt[i] = new double [19];
-if (sim_mode == 0)
+if (global->sim_mode == 0)
 {
     	for (double adposition=max(0,inputParameter->minAdPos);adposition<=min(1,inputParameter->maxAdPos);adposition++) 
     	{
@@ -279,7 +279,7 @@ if (sim_mode == 0)
 		fout<<"xbarsize:"<<optresult[16]<<endl;
 	}
    }// if 
-   else if (sim_mode == 1)
+   else if (global->sim_mode == 1)
    {
         for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
 	{
@@ -306,11 +306,11 @@ if (sim_mode == 0)
 							// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
 							xbar_area = 1*xbarsize*xbarsize*netrow*netcolumn;
 							// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
-							periph_area = 4*Mux4.Mux_Area()*netrow*netcolumn + 1*Demux16.Demux_Area()*netrow*netcolumn + 4*Demux4.Demux_Area()*netrow*netcolumn;
+							periph_area = 4*Mux4.Mux_Area*netrow*netcolumn + 1*Demux16.Demux_Area*netrow*netcolumn + 4*Demux4.Demux_Area*netrow*netcolumn;
 							// periphery latency = #MUX*latencyMUX*netrow*netcolumn + #DEMUX*DEMUXlatency*netrow*netcolumn + subcomponents...
-							periph_lat = 4*Mux4.Mux_Latency()*netrow*netcolumn + 1*Demux16.Demux_Latency()*netrow*netcolumn + 4*Demux4.Demux_Area()*netrow*netcolumn;
+							periph_lat = 4*Mux4.Mux_Latency*netrow*netcolumn + 1*Demux16.Demux_Latency*netrow*netcolumn + 4*Demux4.Demux_Area*netrow*netcolumn;
 							// periphery power = #MUX*MUXleakagePower*netrow*netcolumn + #MUX*MUXdynamicPower*netrow*netcolumn + #DEMUX*DEMUXleakagePower*netrow*netcolumn + #DEMUX*DEMUXdynamicPower*netrow*netcolumn+ subcomponents...
-							periph_power = 4*Mux4.Mux_Power_Leakage()*netrow*netcolumn + 1*Demux16.Demux_Power_Leakage()*netrow*netcolumn + 4*Demux4.Demux_Power_Dynamic()*netrow*netcolumn + 4*Mux4.Mux_Power_Dynamic()*netrow*netcolumn + 1*Demux16.Demux_Power_Dynamic()*netrow*netcolumn + 4*Demux4.Demux_Power_Dynamic()*netrow*netcolumn;
+							periph_power = 4*Mux4.Mux_Power_Leakage*netrow*netcolumn + 1*Demux16.Demux_Power_Leakage*netrow*netcolumn + 4*Demux4.Demux_Power_Dynamic*netrow*netcolumn + 4*Mux4.Mux_Power_Dynamic*netrow*netcolumn + 1*Demux16.Demux_Power_Dynamic*netrow*netcolumn + 4*Demux4.Demux_Power_Dynamic*netrow*netcolumn;
 							for (int j=0; j < inputParameter->subCompNum; j++)
 							{
 								periph_area = periph_area + inputParameter->subArea[j]*netrow*netcolumn;
