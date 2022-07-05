@@ -453,7 +453,7 @@ double max1(int a,int b,int c) {
 	return i;
 }
 
-/*
+
 double Demux_Area(int Demux_InputNum){
   switch(Demux_InputNum) {
     case 4 :
@@ -581,4 +581,4 @@ double Mux_Power_Dynamic(int Mux_InputNum){
     default 
       return 0; }
   }
-  */
+  
