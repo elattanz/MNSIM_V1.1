@@ -97,7 +97,8 @@ void InputParameter::ReadInputParameterFromFile(string filename){
         i++;
     }
 
-
+	subCompNum = 0;
+	
 	// reading in configration from file
 	for (i=(config_begin+1);i<=config_end;i++)
 	{
