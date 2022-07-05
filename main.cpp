@@ -10,12 +10,15 @@
 #include"global.h"
 #include"function.h"
 #include"Technology.h"
+#include"SetMux.h"
+#include"SetDemux.h"
 
 using namespace std;
 
 InputParameter *inputParameter;
 int count_my = 1;
 double area,area_flags,latency,latency_multi,power_multi,power_flags,area_multi,power,energy,application,action_type;
+double xbar_power, xbar_lat, xbar_area, periph_area, periph_lat, periph_power;
 int target;
 double pulseposition = 0;
 double cell_bit = 8;
@@ -291,16 +294,32 @@ if (sim_mode == 0)
 							// this func calculates netrow and netcolumn 
 							determin_net_P(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);	
 							// crossbar power = PCM_leakage_power*xbarsize*xbarsize*netrow*netcolumn + PCM_dynamic_power*xbarsize*xbarsize*netrow*netcolumn
+							xbar_power = 1*xbarsize*xbarsize*netrow*netcolumn + 1*xbarsize*xbarsize*netrow*netcolumn;
 							// crossbar latency = PCM_latency*xbarsize*xbarsize*netrow*netcolumn 
+							xbar_lat = 1*xbarsize*xbarsize*netrow*netcolumn;
 							// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
+							xbar_area = 1*xbarsize*xbarsize*netrow*netcolumn;
 							// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
+							periph_area = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 							// periphery latency = #MUX*latencyMUX*netrow*netcolumn + #DEMUX*DEMUXlatency*netrow*netcolumn + subcomponents...
+							periph_lat = 4*Mux_Latency(4)*netrow*netcolumn + 1*Demux_Latency(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 							// periphery power = #MUX*MUXleakagePower*netrow*netcolumn + #MUX*MUXdynamicPower*netrow*netcolumn + #DEMUX*DEMUXleakagePower*netrow*netcolumn + #DEMUX*DEMUXdynamicPower*netrow*netcolumn+ subcomponents...
+							periph_power = 4*Mux_Power_Leakage(4)*netrow*netcolumn + 1*Demux_Power_Leakage(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn + 4*Mux_Power_Dynamic(4)*netrow*netcolumn + 1*Demux_Power_Dynamic(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn;
+							for (int j=0; j < inputParameter->subCompNum; j++)
+							{
+								periph_area = periph_area + inputParameter->subArea[j]*netrow*netcolumn;
+								periph_lat = periph_lat + inputParameter->subLatency[j]*netrow*netcolumn;
+								periph_power = periph_power + inputParameter->subLeakPw[j]*netrow*netcolumn + inputParameter->subDymPw[j]*netrow*netcolumn;
+							}
 							// area = crossbar area + periphery area
+							area = xbar_area + periph_area; 
 							// latency = crossbar latency + periphery latency
+							latency = xbar_lat + periph_lat;
 							// power = crossbar power + crossbar latency
+							power = xbar_power + periph_power;
 							// ***** There is a good change this energy calculation won't be accurate because we did not add the read and write power of PCM
 							//energy = (utilization*crossbar power * crossbar latency) + (peripherary power * peripherary latency);
+							energy = 10;
 							equal_P(netlevel,area,energy,latency,power,read_sep,bit_level,linetech,xbarsize);
 							count_my = count_my + 1;
 						}//for				
