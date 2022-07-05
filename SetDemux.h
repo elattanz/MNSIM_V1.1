@@ -1,4 +1,4 @@
-#indef SETDEMUX_H_
+#ifndef SETDEMUX_H_
 #define SETDEMUX_H_
 
 //#include "CalculateGate.h"
