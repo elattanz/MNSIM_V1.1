@@ -73,6 +73,7 @@ public:
     	double subLatency[15];
     	double subLeakPw[15];
     	double subDymPw[15];
+	bool sim_mode; 
 
 };
 
