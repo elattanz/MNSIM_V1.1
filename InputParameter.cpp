@@ -107,10 +107,12 @@ void InputParameter::ReadInputParameterFromFile(string filename){
 		if(cfgtxt[i].find("Photonic")!=string::npos)
 		{
 			sim_mode = 1;
+			cout <<  "Photonic mode" << endl;
 		} 
 		else if(cfgtxt[i].find("Electronic")!=string::npos)
 		{
 			sim_mode = 0;
+			cout <<  "Electronic mode" << endl;
 		} 
        		else if(cfgtxt[i].find("Application_Scale")!=string::npos)
 		{
