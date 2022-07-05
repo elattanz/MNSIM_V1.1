@@ -15,6 +15,9 @@
 
 using namespace std;
 
+
+void equal_P(double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize);
+
 InputParameter *inputParameter;
 int count_my = 1;
 double area,area_flags,latency,latency_multi,power_multi,power_flags,area_multi,power,energy,application,action_type,celltype;
