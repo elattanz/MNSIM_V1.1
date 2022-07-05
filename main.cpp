@@ -306,11 +306,11 @@ if (inputParameter->sim_mode == 0)
 							// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
 							xbar_area = 1*xbarsize*xbarsize*netrow*netcolumn;
 							// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
-							periph_area = 4*Mux4.Mux_Area*netrow*netcolumn + 1*Demux16.Demux_Area*netrow*netcolumn + 4*Demux4.Demux_Area*netrow*netcolumn;
+							periph_area = 4*Mux4.Mux_Area()*netrow*netcolumn + 1*Demux16.Demux_Area()*netrow*netcolumn + 4*Demux4.Demux_Area()*netrow*netcolumn;
 							// periphery latency = #MUX*latencyMUX*netrow*netcolumn + #DEMUX*DEMUXlatency*netrow*netcolumn + subcomponents...
-							periph_lat = 4*Mux4.Mux_Latency*netrow*netcolumn + 1*Demux16.Demux_Latency*netrow*netcolumn + 4*Demux4.Demux_Area*netrow*netcolumn;
+							periph_lat = 4*Mux4.Mux_Latency()*netrow*netcolumn + 1*Demux16.Demux_Latency()*netrow*netcolumn + 4*Demux4.Demux_Area()*netrow*netcolumn;
 							// periphery power = #MUX*MUXleakagePower*netrow*netcolumn + #MUX*MUXdynamicPower*netrow*netcolumn + #DEMUX*DEMUXleakagePower*netrow*netcolumn + #DEMUX*DEMUXdynamicPower*netrow*netcolumn+ subcomponents...
-							periph_power = 4*Mux4.Mux_Power_Leakage*netrow*netcolumn + 1*Demux16.Demux_Power_Leakage*netrow*netcolumn + 4*Demux4.Demux_Power_Dynamic*netrow*netcolumn + 4*Mux4.Mux_Power_Dynamic*netrow*netcolumn + 1*Demux16.Demux_Power_Dynamic*netrow*netcolumn + 4*Demux4.Demux_Power_Dynamic*netrow*netcolumn;
+							periph_power = 4*Mux4.Mux_Power_Leakage()*netrow*netcolumn + 1*Demux16.Demux_Power_Leakage()*netrow*netcolumn + 4*Demux.Demux_Power_Dynamic()*netrow*netcolumn + 4*Mux4.Mux_Power_Dynamic()*netrow*netcolumn + 1*Demux16.Demux_Power_Dynamic()*netrow*netcolumn + 4*Demux4.Demux_Power_Dynamic()*netrow*netcolumn;
 							for (int j=0; j < inputParameter->subCompNum; j++)
 							{
 								periph_area = periph_area + inputParameter->subArea[j]*netrow*netcolumn;
