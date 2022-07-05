@@ -1,4 +1,5 @@
 #include "InputParameter.h"
+#include "global.h"
 #include<fstream>
 #include<string>
 #include <sstream>
