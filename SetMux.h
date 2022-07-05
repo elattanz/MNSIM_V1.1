@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include "constant.h"
 
-class SetDemux {
+class SetMux {
   public:
           int Mux_InputNum; //size of gate, ex a 4 means a 4:1 MUX
   
