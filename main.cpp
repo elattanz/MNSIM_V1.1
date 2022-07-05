@@ -34,12 +34,12 @@ int mincount = 0;
 double tech;
 int err_count;
 Technology *technology;
-SetMux *Mux4;
-Mux4.Mux_InputNum = 4;
-SetDemux *Demux4;
-Demux4.Demux_InputNum = 4;
-SetDemux *Demux16;
-Demux16.Demux_InputNum = 16;
+//SetMux Mux4;
+//Mux4.Mux_InputNum = 4;
+//SetDemux Demux4;
+//Demux4.Demux_InputNum = 4;
+//SetDemux Demux16;
+//Demux16.Demux_InputNum = 16;
 
 int main(int argc, char *argv[]) 
 {
@@ -445,3 +445,132 @@ double max1(int a,int b,int c) {
 	return i;
 }
 
+/*
+double SetDemux::Demux_Area(){
+  switch(Demux_InputNum) {
+    case 4 :
+      return 15.4869;
+    case 8 :
+      return 34.2589;
+    case 16 : 
+      return 76.9652;
+    case 32 :
+      return 140.790;
+    case 64 :
+      return 263.2773;
+    default 
+      return 0; }
+  }
+ 
+double SetDemux::Demux_Latency(){
+  switch(Demux_InputNum) {
+    case 4 :
+      return .08;
+    case 8 :
+      return .13;
+    case 16 : 
+      return .11;
+    case 32 :
+      return .18;
+    case 64 :
+      return .19;
+    default 
+      return 0; }
+  }
+  
+double SetDemux::Demux_Power_Leakage(){
+  switch(Demux_InputNum) {
+    case 4 :
+      return 27.6717e-9;
+    case 8 :
+      return 84.8136e-9;
+    case 16 : 
+      return 232.8362e-9;
+    case 32 :
+      return 422.1485e-9;
+    case 64 :
+      return 740.6179e-9;
+    default 
+      return 0; }
+  }
+  
+double SetDemux::Demux_Power_Dynamic(){
+  switch(Demux_InputNum) {
+    case 4 :
+      return 3.1805e-6;
+    case 8 :
+      return 6.202e-6;
+    case 16 : 
+      return 10.4622e-6;
+    case 32 :
+      return 16.6957e-6;
+    case 64 :
+      return 27.7357e-6;
+    default 
+      return 0;
+  }
+
+double Mux_Area(){
+  switch(Mux_InputNum) {
+    case 4 :
+      return 11.2632;
+    case 8 :
+      return 27.6887;
+    case 16 : 
+      return 132.3426;
+    case 32 :
+      return 276.417;
+    case 64 :
+      return 561.2829;
+    default 
+      return 0;
+  }
+ 
+double Mux_Latency(){
+  switch(Mux_InputNum) {
+    case 4 :
+      return .07;
+    case 8 :
+      return .14;
+    case 16 : 
+      return .49;
+    case 32 :
+      return .81;
+    case 64 :
+      return 1.188;
+    default 
+      return 0;
+  }
+  
+double Mux_Power_Leakage(){
+  switch(Mux_InputNum) {
+    case 4 :
+      return 55.6509e-9;
+    case 8 :
+      return 131.5937e-9;
+    case 16 : 
+      return 640.5314e-9;
+    case 32 :
+      return 1.3155e-6;
+    case 64 :
+      return 2.6812e-6;
+    default 
+      return 0;
+  }
+  
+double Mux_Power_Dynamic(){
+  switch(Mux_InputNum) {
+    case 4 :
+      return 3.3018e-6;
+    case 8 :
+      return 8.9763e-6;
+    case 16 : 
+      return 34.585e-6;
+    case 32 :
+      return 68.506e-6;
+    case 64 :
+      return 105.2228e-6;
+    default 
+      return 0;
+  }
+  */
