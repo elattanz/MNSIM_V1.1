@@ -1,5 +1,6 @@
-//#indef SETMUX_H_
-//#define SETMUX_H_
+#indef SETMUX_H_
+#define SETMUX_H_
+
 
 //#include "CalculateGate.h"
 #include "Technology.h"
@@ -18,4 +19,4 @@ class SetMux {
           double Mux_Power_Dynamic();
 };
 
-//#endif
+#endif
