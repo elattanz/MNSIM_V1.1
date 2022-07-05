@@ -10,13 +10,21 @@
 #include"global.h"
 #include"function.h"
 #include"Technology.h"
-#include "SetMux.h"
-#include "SetDemux.h"
+//#include "SetMux.h"
+//#include "SetDemux.h"
 
 using namespace std;
 
 
 void equal_P(double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize);
+double Demux_Area(int Demux_InputNum);
+double Demux_Latency(int Demux_InputNum);
+double Demux_Power_Leakage(int Demux_InputNum);
+double Demux_Power_Dynamic(int Demux_InputNum);
+double Mux_Area(int Mux_InputNum);
+double Mux_Latency(int Mux_InputNum);
+double Mux_Power_Leakage(int Mux_InputNum);
+double Mux_Power_Dynamic(int Mux_InputNum);
 
 InputParameter *inputParameter;
 int count_my = 1;
@@ -309,11 +317,11 @@ if (inputParameter->sim_mode == 0)
 							// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
 							xbar_area_p = 1*xbarsize*xbarsize*netrow*netcolumn;
 							// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
-							periph_area_p = 4*Mux4.Mux_Area()*netrow*netcolumn + 1*Demux16.Demux_Area()*netrow*netcolumn + 4*Demux4.Demux_Area()*netrow*netcolumn;
+							periph_area_p = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 							// periphery latency = #MUX*latencyMUX*netrow*netcolumn + #DEMUX*DEMUXlatency*netrow*netcolumn + subcomponents...
-							periph_lat_p = 4*Mux4.Mux_Latency()*netrow*netcolumn + 1*Demux16.Demux_Latency()*netrow*netcolumn + 4*Demux4.Demux_Area()*netrow*netcolumn;
+							periph_lat_p = 4*Mux_Latency(4)*netrow*netcolumn + 1*Demux_Latency(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 							// periphery power = #MUX*MUXleakagePower*netrow*netcolumn + #MUX*MUXdynamicPower*netrow*netcolumn + #DEMUX*DEMUXleakagePower*netrow*netcolumn + #DEMUX*DEMUXdynamicPower*netrow*netcolumn+ subcomponents...
-							periph_power_p = 4*Mux4.Mux_Power_Leakage()*netrow*netcolumn + 1*Demux16.Demux_Power_Leakage()*netrow*netcolumn + 4*Demux4.Demux_Power_Dynamic()*netrow*netcolumn + 4*Mux4.Mux_Power_Dynamic()*netrow*netcolumn + 1*Demux16.Demux_Power_Dynamic()*netrow*netcolumn + 4*Demux4.Demux_Power_Dynamic()*netrow*netcolumn;
+							periph_power_p = 4*Mux_Power_Leakage(4)*netrow*netcolumn + 1*Demux_Power_Leakage(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn + 4*Mux_Power_Dynamic(4)*netrow*netcolumn + 1*Demux.Demux_Power_Dynamic(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn;
 							for (int j=0; j < inputParameter->subCompNum; j++)
 							{
 								periph_area_p = periph_area_p + inputParameter->subArea[j]*netrow*netcolumn;
@@ -446,7 +454,7 @@ double max1(int a,int b,int c) {
 }
 
 /*
-double SetDemux::Demux_Area(){
+double Demux_Area(int Demux_InputNum){
   switch(Demux_InputNum) {
     case 4 :
       return 15.4869;
@@ -462,7 +470,7 @@ double SetDemux::Demux_Area(){
       return 0; }
   }
  
-double SetDemux::Demux_Latency(){
+double Demux_Latency(int Demux_InputNum){
   switch(Demux_InputNum) {
     case 4 :
       return .08;
@@ -478,7 +486,7 @@ double SetDemux::Demux_Latency(){
       return 0; }
   }
   
-double SetDemux::Demux_Power_Leakage(){
+double Demux_Power_Leakage(int Demux_InputNum){
   switch(Demux_InputNum) {
     case 4 :
       return 27.6717e-9;
@@ -494,7 +502,7 @@ double SetDemux::Demux_Power_Leakage(){
       return 0; }
   }
   
-double SetDemux::Demux_Power_Dynamic(){
+double Demux_Power_Dynamic(int Demux_InputNum){
   switch(Demux_InputNum) {
     case 4 :
       return 3.1805e-6;
@@ -510,7 +518,7 @@ double SetDemux::Demux_Power_Dynamic(){
       return 0; }
   }
 
-double Mux_Area(){
+double Mux_Area(int Mux_InputNum){
   switch(Mux_InputNum) {
     case 4 :
       return 11.2632;
@@ -526,7 +534,7 @@ double Mux_Area(){
       return 0; }
   }
  
-double Mux_Latency(){
+double Mux_Latency(int Mux_InputNum){
   switch(Mux_InputNum) {
     case 4 :
       return .07;
@@ -542,7 +550,7 @@ double Mux_Latency(){
       return 0; }
   }
   
-double Mux_Power_Leakage(){
+double Mux_Power_Leakage(int Mux_InputNum){
   switch(Mux_InputNum) {
     case 4 :
       return 55.6509e-9;
@@ -558,7 +566,7 @@ double Mux_Power_Leakage(){
       return 0; }
   }
   
-double Mux_Power_Dynamic(){
+double Mux_Power_Dynamic(int Mux_InputNum){
   switch(Mux_InputNum) {
     case 4 :
       return 3.3018e-6;
