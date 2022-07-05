@@ -5,7 +5,7 @@ SetDemux::SetDemux(int demux_num){
   Demux_InputNum = demux_num;
 }
 
-SetDemux::~SetDemux(){}
+//SetDemux::~SetDemux(){}
 
 double SetDemux::Demux_Area(){
   switch(Demux_InputNum) {
