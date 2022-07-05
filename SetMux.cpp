@@ -1,8 +1,8 @@
 #include "SetMux.h"
 
 
-SetMux::SetMux(int mux_num){
-  Mux_InputNum = mux_num;
+SetMux::SetMux(){
+  //Mux_InputNum = mux_num;
 }
 
 //SetMux::~SetMux(){}
