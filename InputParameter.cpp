@@ -47,6 +47,7 @@ InputParameter::InputParameter() {
 	mult32 = 0;
 	counter16 = 0;
 	subCompNum = 0;
+	sim_mode = 0;
 	
 }
 InputParameter::~InputParameter() {
