@@ -1,6 +1,7 @@
 config {
 	Photonic
 	Application_Scale 9
+	Target_Output Area
 	Weight_Polarity 2
 	Bit_Levels 8
 	Min_Crossbar_Size 256
