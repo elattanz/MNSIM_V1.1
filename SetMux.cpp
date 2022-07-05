@@ -8,7 +8,8 @@ SetMux::SetMux(){
 //SetMux::~SetMux(){}
 
 double SetMux::Mux_Area(){
-  switch(Mux_InputNum) {
+  switch(Mux_InputNum) 
+  {
     case 4 :
       return 11.2632;
     case 8 :
@@ -22,9 +23,11 @@ double SetMux::Mux_Area(){
     default 
       return 0;
   }
- 
+}
+
 double SetMux::Mux_Latency(){
-  switch(Mux_InputNum) {
+  switch(Mux_InputNum)
+  {
     case 4 :
       return .07;
     case 8 :
@@ -38,9 +41,11 @@ double SetMux::Mux_Latency(){
     default 
       return 0;
   }
+}
   
 double SetMux::Mux_Power_Leakage(){
-  switch(Mux_InputNum) {
+  switch(Mux_InputNum) 
+  {
     case 4 :
       return 55.6509e-9;
     case 8 :
@@ -54,9 +59,11 @@ double SetMux::Mux_Power_Leakage(){
     default 
       return 0;
   }
+}
   
 double SetMux::Mux_Power_Dynamic(){
-  switch(Demux_InputNum) {
+  switch(Mux_InputNum) 
+  {
     case 4 :
       return 3.3018e-6;
     case 8 :
@@ -70,3 +77,4 @@ double SetMux::Mux_Power_Dynamic(){
     default 
       return 0;
   }
+}
