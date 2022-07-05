@@ -5,7 +5,7 @@ SetDemux::SetDemux(int mux_num){
   Mux_InputNum = mux_num;
 }
 
-SetMux::~SetMux(){}
+//SetMux::~SetMux(){}
 
 double SetMux::Mux_Area(){
   switch(Mux_InputNum) {
