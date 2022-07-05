@@ -466,7 +466,7 @@ double Demux_Area(int Demux_InputNum){
       return 140.790;
     case 64 :
       return 263.2773;
-    default 
+    default :
       return 0; }
   }
  
@@ -482,7 +482,7 @@ double Demux_Latency(int Demux_InputNum){
       return .18;
     case 64 :
       return .19;
-    default 
+    default :
       return 0; }
   }
   
@@ -498,7 +498,7 @@ double Demux_Power_Leakage(int Demux_InputNum){
       return 422.1485e-9;
     case 64 :
       return 740.6179e-9;
-    default 
+    default :
       return 0; }
   }
   
@@ -514,7 +514,7 @@ double Demux_Power_Dynamic(int Demux_InputNum){
       return 16.6957e-6;
     case 64 :
       return 27.7357e-6;
-    default 
+    default :
       return 0; }
   }
 
@@ -530,7 +530,7 @@ double Mux_Area(int Mux_InputNum){
       return 276.417;
     case 64 :
       return 561.2829;
-    default 
+    default :
       return 0; }
   }
  
@@ -546,7 +546,7 @@ double Mux_Latency(int Mux_InputNum){
       return .81;
     case 64 :
       return 1.188;
-    default 
+    default :
       return 0; }
   }
   
@@ -562,7 +562,7 @@ double Mux_Power_Leakage(int Mux_InputNum){
       return 1.3155e-6;
     case 64 :
       return 2.6812e-6;
-    default 
+    default :
       return 0; }
   }
   
@@ -578,7 +578,7 @@ double Mux_Power_Dynamic(int Mux_InputNum){
       return 68.506e-6;
     case 64 :
       return 105.2228e-6;
-    default 
+    default :
       return 0; }
   }
   
