@@ -278,6 +278,7 @@ int main(int argc, char *argv[])
    	}// if 
    	else if (inputParameter->sim_mode == 1)
    	{
+		cout << "Checkpoint 1" << endl;
         	for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
 		{
               	  	for (double linetech = 90;linetech<=90;linetech++) 
@@ -294,6 +295,7 @@ int main(int argc, char *argv[])
 						{
 							for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) 
 							{ 
+								cout << "Checkpoint 2" << endl;
 								// this func calculates netrow and netcolumn 
 								determin_net_P(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);	
 								// crossbar power = PCM_leakage_power*xbarsize*xbarsize*netrow*netcolumn + PCM_dynamic_power*xbarsize*xbarsize*netrow*netcolumn
@@ -331,6 +333,7 @@ int main(int argc, char *argv[])
     		    		}//for
 	   	 	}//for
    	 	}//for 
+		cout << "Checkpoint 3" << endl;
    		 double design_space = count_my/inputParameter->AppScale;
    		 AAAestrslt = new double* [int(design_space)+1];
 		for(int i =0; i <= design_space; i++)
@@ -358,6 +361,7 @@ int main(int argc, char *argv[])
 				mincount = temp_count;
 			}
 		}//for 
+		cout << "Checkpoint 4" << endl;
 		double optresult[9];
 		optresult[0] = AAAestrslt[mincount][0];
 		for (int i=1;i<6;i++)
@@ -381,7 +385,7 @@ int main(int argc, char *argv[])
 		fout<<"xbarsize:"<<optresult[9]<<endl;
 		}
   	   } // elseif 
-	
+	cout << "Checkpoint 5" << endl;
 
 	toc=clock();
    	cout<<"Run time: "<<(double)(toc-tic)/CLOCKS_PER_SEC<<"S"<<endl;
