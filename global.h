@@ -22,5 +22,5 @@ extern double adders_power,neuron_power,power_p;
 extern double accuracy,d1,area,area_flags,energy,latency,latency_multi,power_multi,power_flags,area_multi,power,energy,application,action_type;
 extern int target;
 extern double tech,pulseposition,cell_bit,lantency_multi;
-extern bool sim_mode; //0 for electronic, 1 for photonic
+//extern bool sim_mode; //0 for electronic, 1 for photonic
 #endif
