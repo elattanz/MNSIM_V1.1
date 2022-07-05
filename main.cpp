@@ -17,7 +17,7 @@ using namespace std;
 
 InputParameter *inputParameter;
 int count_my = 1;
-double area,area_flags,latency,latency_multi,power_multi,power_flags,area_multi,power,energy,application,action_type;
+double area,area_flags,latency,latency_multi,power_multi,power_flags,area_multi,power,energy,application,action_type,celltype;
 double xbar_power, xbar_lat, xbar_area, periph_area, periph_lat, periph_power;
 int target;
 double pulseposition = 0;
