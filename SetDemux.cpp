@@ -1,8 +1,8 @@
 #include "SetDemux.h"
 
 
-SetDemux::SetDemux(int demux_num){
-  Demux_InputNum = demux_num;
+SetDemux::SetDemux(){
+  //Demux_InputNum = demux_num;
 }
 
 //SetDemux::~SetDemux(){}
