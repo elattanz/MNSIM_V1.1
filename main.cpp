@@ -31,9 +31,9 @@ int mincount = 0;
 double tech;
 int err_count;
 Technology *technology;
-SetMux(4) Mux4;
-SetDemux(4) Demux4;
-SetDemux(16) Demux16;
+SetMux Mux4(4);
+SetDemux Demux4(4);
+SetDemux Demux16(16);
 
 int main(int argc, char *argv[]) 
 {
