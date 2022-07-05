@@ -507,7 +507,7 @@ double SetDemux::Demux_Power_Dynamic(){
     case 64 :
       return 27.7357e-6;
     default 
-      return 0;
+      return 0; }
   }
 
 double Mux_Area(){
@@ -523,7 +523,7 @@ double Mux_Area(){
     case 64 :
       return 561.2829;
     default 
-      return 0;
+      return 0; }
   }
  
 double Mux_Latency(){
@@ -539,7 +539,7 @@ double Mux_Latency(){
     case 64 :
       return 1.188;
     default 
-      return 0;
+      return 0; }
   }
   
 double Mux_Power_Leakage(){
@@ -555,7 +555,7 @@ double Mux_Power_Leakage(){
     case 64 :
       return 2.6812e-6;
     default 
-      return 0;
+      return 0; }
   }
   
 double Mux_Power_Dynamic(){
@@ -571,6 +571,6 @@ double Mux_Power_Dynamic(){
     case 64 :
       return 105.2228e-6;
     default 
-      return 0;
+      return 0; }
   }
   */
