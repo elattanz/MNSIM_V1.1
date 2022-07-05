@@ -1,5 +1,5 @@
-//#indef SETDEMUX_H_
-//#define SETDEMUX_H_
+#indef SETDEMUX_H_
+#define SETDEMUX_H_
 
 //#include "CalculateGate.h"
 #include "Technology.h"
@@ -18,6 +18,6 @@ class SetDemux {
           double Demux_Power_Dynamic();
 };
 
-//#endif
+#endif
 
                                 
