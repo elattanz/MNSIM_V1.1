@@ -321,7 +321,7 @@ if (inputParameter->sim_mode == 0)
 							// periphery latency = #MUX*latencyMUX*netrow*netcolumn + #DEMUX*DEMUXlatency*netrow*netcolumn + subcomponents...
 							periph_lat_p = 4*Mux_Latency(4)*netrow*netcolumn + 1*Demux_Latency(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 							// periphery power = #MUX*MUXleakagePower*netrow*netcolumn + #MUX*MUXdynamicPower*netrow*netcolumn + #DEMUX*DEMUXleakagePower*netrow*netcolumn + #DEMUX*DEMUXdynamicPower*netrow*netcolumn+ subcomponents...
-							periph_power_p = 4*Mux_Power_Leakage(4)*netrow*netcolumn + 1*Demux_Power_Leakage(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn + 4*Mux_Power_Dynamic(4)*netrow*netcolumn + 1*Demux.Demux_Power_Dynamic(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn;
+							periph_power_p = 4*Mux_Power_Leakage(4)*netrow*netcolumn + 1*Demux_Power_Leakage(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn + 4*Mux_Power_Dynamic(4)*netrow*netcolumn + 1*Demux_Power_Dynamic(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn;
 							for (int j=0; j < inputParameter->subCompNum; j++)
 							{
 								periph_area_p = periph_area_p + inputParameter->subArea[j]*netrow*netcolumn;
