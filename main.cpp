@@ -34,11 +34,11 @@ int mincount = 0;
 double tech;
 int err_count;
 Technology *technology;
-SetMux() Mux4;
+SetMux *Mux4;
 Mux4.Mux_InputNum = 4;
-SetDemux() Demux4;
+SetDemux *Demux4;
 Demux4.Demux_InputNum = 4;
-SetDemux() Demux16;
+SetDemux *Demux16;
 Demux16.Demux_InputNum = 16;
 
 int main(int argc, char *argv[]) 
