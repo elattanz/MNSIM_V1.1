@@ -11,7 +11,7 @@ class SetMux {
           int Mux_InputNum; //size of gate, ex a 4 means a 4:1 MUX
   
           SetMux(int mux_num);
-          double ~SetMux();
+          //double ~SetMux();
           double Mux_Area();
           double Mux_Latency();
           double Mux_Power_Leakage();
