@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 	AAestrslt = new double* [row];
 	for(int i =0; i < row; i++)
 		AAestrslt[i] = new double [19];
-if (global->sim_mode == 0)
+if (inputParameter->sim_mode == 0)
 {
     	for (double adposition=max(0,inputParameter->minAdPos);adposition<=min(1,inputParameter->maxAdPos);adposition++) 
     	{
@@ -279,7 +279,7 @@ if (global->sim_mode == 0)
 		fout<<"xbarsize:"<<optresult[16]<<endl;
 	}
    }// if 
-   else if (global->sim_mode == 1)
+   else if (inputParameter->sim_mode == 1)
    {
         for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
 	{
