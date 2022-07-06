@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 									periphery_area(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application);
 									periphery_latency_c(*technology,netrow, adderposition,pulseposition,inputParameter->sig_bit,application); 
 									periphery_power_c(*technology,xbarsize, netrow, netcolumn, adderposition,pulseposition,inputParameter->sig_bit,application,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);
-									//accuracy_c(xbarsize,linetech,inputParameter->sig_bit,cell_bit,inputParameter->maxRRang,input_err[(int)netlevel-1]);	
+									accuracy_c(xbarsize,linetech,inputParameter->sig_bit,cell_bit,inputParameter->maxRRang,input_err[(int)netlevel-1]);	
 									//input_err[(int)netlevel] = accuracy;
 									area = area_u * netrow * netcolumn + area_l + area_p ;//+ area_r + area_w;
 									energy = utilization * power_u * latency_u * netrow * netcolumn + power_l * latency_l + power_p * latency_p;
