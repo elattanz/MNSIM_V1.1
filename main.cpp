@@ -282,7 +282,7 @@ int main(int argc, char *argv[])
     		double minlatency = 8e10;
     		double minerr = 8e10;
 		//double mintarget[8]={0,0,minarea,minenergy,minlatency,minerr,minpower};
-    		double mintarget[4]={minarea,minenergy,minlatency,minpower}
+    		double mintarget[4]={minarea,minenergy,minlatency,minpower};
 		
         	for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
 		{
@@ -360,11 +360,12 @@ int main(int argc, char *argv[])
 				AAAestrslt[temp_count][5] += AAestrslt[((temp_count-1) * inputParameter->AppScale +netlevel_temp)][5];   //power
 				for(int i = 6;i<10;i++)   //read_sep, bit_level, linetech, xbarsize
 					AAAestrslt[temp_count][i] = AAestrslt[((temp_count-1) * inputParameter->AppScale +netlevel_temp)][i];
-			}
-			if (AAAestrslt[temp_count][target+1] < mintarget[target-1]){
+			} //for
+			if (AAAestrslt[temp_count][target+1] < mintarget[target-1])
+			{
 				mintarget[target-1] = AAAestrslt[temp_count][target+1];
 				mincount = temp_count;
-			}
+			} //if 
 		}//for 
 		cout << "Checkpoint 4" << endl;
 		double optresult[9];
@@ -387,9 +388,9 @@ int main(int argc, char *argv[])
 			fout<<"read_sep:"<<optresult[6]<<endl;
 			fout<<"bit_level:"<<optresult[7]<<endl;
 			fout<<"linetech:"<<optresult[8]<<endl;
-		fout<<"xbarsize:"<<optresult[9]<<endl;
-		}
-  	   } // elseif 
+			fout<<"xbarsize:"<<optresult[9]<<endl;
+			}
+  	} // elseif 
 	cout << "Checkpoint 5" << endl;
 
 	toc=clock();
@@ -399,7 +400,7 @@ int main(int argc, char *argv[])
 	delete AAAestrslt;
 	delete technology;
 	return 0;
-}
+} //main
 
 void equal(double netlevel,double area,double energy,double latency,double power,double accuracy,double area_multi,double power_multi,double latency_multi,double read_sep,double adposition,double bit_level,double adderposition,double pulseposition,double linetech,double celltype,double xbarsize) {
 	AAestrslt[count_my][0] = netrow * netcolumn;
