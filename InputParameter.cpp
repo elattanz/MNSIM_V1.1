@@ -102,7 +102,7 @@ void InputParameter::ReadInputParameterFromFile(string filename){
 	subCompNum = 0;
 	
 	// reading in configration from file
-	for (i=(config_begin+1);i<=config_end;i++)
+	for (i=(config_begin);i<=config_end;i++)
 	{
 		if(cfgtxt[i].find("Photonic")!=string::npos)
 		{
