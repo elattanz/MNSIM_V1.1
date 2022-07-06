@@ -276,6 +276,14 @@ int main(int argc, char *argv[])
 		for(int i =0; i < row; i++)
 			AAestrslt[i] = new double [10];	
 		cout << "Checkpoint 1" << endl;
+		double minarea = 8e10;
+   		double minenergy = 8e10;
+    		double minpower = 8e10;
+    		double minlatency = 8e10;
+    		double minerr = 8e10;
+		//double mintarget[8]={0,0,minarea,minenergy,minlatency,minerr,minpower};
+    		double mintarget[4]={minarea,minenergy,minlatency,minpower}
+		
         	for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
 		{
               	  	for (double linetech = 90;linetech<=90;linetech++) 
