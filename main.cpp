@@ -51,6 +51,8 @@ Technology *technology;
 
 int main(int argc, char *argv[]) 
 {
+	cout << endl << "Testing cout function in main program" << endl; 
+	
 	clock_t tic,toc;
 	tic=clock();
 	inputParameter = new InputParameter();
@@ -58,13 +60,13 @@ int main(int argc, char *argv[])
 	string inputFileName;
 	string outputFileName;
 
-	if (argc == 1) {   //read configuration file
+	//if (argc == 1) {   //read configuration file
 		inputFileName = "SimConfig.txt";
 		outputFileName = "result.txt";
 		cout << "Default sim-config file (SimConfig.txt) is loaded" << endl;
 		cout << "Use default output results file (result.txt)" << endl;
-	} 
-	else if (argc == 2) {
+	//} 
+	/*else if (argc == 2) {
 		inputFileName = argv[1];
 		cout << "User-defined sim-config file (" << inputFileName << ") is loaded" << endl;
 		cout << "Use default output results file (result.txt)" << endl;
@@ -81,6 +83,7 @@ int main(int argc, char *argv[])
 		cout << "  Use the customized configuration: " << argv[0] << " <.txt file>"  << endl;
 		exit(-1);
 	}
+	*/
 	cout << endl;
 
 	/*  
@@ -116,45 +119,32 @@ int main(int argc, char *argv[])
 				target = 4;break;
 	}
 
-	technology = new Technology();
-	technology->Initialize(HP/*inputParameter->deviceRoadmap*/);
-
-	Technology techHigh;
-	double alpha = 0;
-	//if (inputParameter->TranTech > 200){  //choose the technology node and calculate the parameters
-		// TO-DO: technology node > 200 nm
-	//} 
-
-	//else if (inputParameter->TranTech > 45) { // 45 nm < technology node <= 65 nm
-	//	techHigh.Initialize(65, HP/*inputParameter->deviceRoadmap*/);
-	//	alpha = (inputParameter->TranTech - 45.0) / 20;
-	//} 
-	//else if (inputParameter->TranTech >= 32) { // 32 nm < technology node <= 45 nm
-		
-	techHigh.Initialize(HP/*inputParameter->deviceRoadmap*/);
-	alpha = (inputParameter->TranTech - 32.0) / 13;
-	//} 
-
-
-	technology->InterpolateWith(techHigh, alpha);  
-
-	//  load tech
-	int tech = inputParameter->TranTech;
-   	double minarea = 8e10;
-   	double minenergy = 8e10;
-    	double minpower = 8e10;
-    	double minlatency = 8e10;
-    	double minerr = 8e10;
-	//double mintarget[8]={0,0,minarea,minenergy,minlatency,minerr,minpower};
-    	double mintarget[4]={minarea,minenergy,minlatency,minpower};
-	double input_err[200]={0};
-    	row = (min(1,inputParameter->maxAdPos)-max(0,inputParameter->minAdPos)+1)*(min(16,inputParameter->maxBtLv)-max(0,inputParameter->minBtLv)+1)*(min(1,inputParameter->maxAdder)-max(0,inputParameter->minAdder)+1)*(log(inputParameter->maxXbarSize)/log(2)-log(inputParameter->minXbarSize)/log(2)+1)*128*inputParameter->AppScale+1;//*6 Decide by the size of crossbar
-	AAestrslt = new double* [row];
-	for(int i =0; i < row; i++)
-		AAestrslt[i] = new double [19];
 	if (inputParameter->sim_mode == 0)
-	{
-    		for (double adposition=max(0,inputParameter->minAdPos);adposition<=min(1,inputParameter->maxAdPos);adposition++) 
+	{	
+		cout << "Checkpoint 5" << endl;
+		technology = new Technology();
+		technology->Initialize(HP/*inputParameter->deviceRoadmap*/);
+		Technology techHigh;
+		double alpha = 0;
+		techHigh.Initialize(HP/*inputParameter->deviceRoadmap*/);
+		alpha = (inputParameter->TranTech - 32.0) / 13;
+		technology->InterpolateWith(techHigh, alpha);  
+		//  load tech
+		int tech = inputParameter->TranTech;
+   		double minarea = 8e10;
+   		double minenergy = 8e10;
+    		double minpower = 8e10;
+    		double minlatency = 8e10;
+    		double minerr = 8e10;
+		//double mintarget[8]={0,0,minarea,minenergy,minlatency,minerr,minpower};
+    		double mintarget[4]={minarea,minenergy,minlatency,minpower};
+		double input_err[200]={0};
+    		row = (min(1,inputParameter->maxAdPos)-max(0,inputParameter->minAdPos)+1)*(min(16,inputParameter->maxBtLv)-max(0,inputParameter->minBtLv)+1)*(min(1,inputParameter->maxAdder)-max(0,inputParameter->minAdder)+1)*(log(inputParameter->maxXbarSize)/log(2)-log(inputParameter->minXbarSize)/log(2)+1)*128*inputParameter->AppScale+1;//*6 Decide by the size of crossbar
+		AAestrslt = new double* [row];
+		for(int i =0; i < row; i++)
+			AAestrslt[i] = new double [19];
+    		
+		for (double adposition=max(0,inputParameter->minAdPos);adposition<=min(1,inputParameter->maxAdPos);adposition++) 
     		{
         		for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
 			{
@@ -174,6 +164,7 @@ int main(int argc, char *argv[])
 								{
 									for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) 
 									{ //-1
+									cout << "Checkpoint 6" << endl;
 									celltype = 1;
 									determin_sig(xbarsize,adderposition,inputParameter->sig_bit,cell_bit,adposition);
 									determin_net(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1],signalsize);		
@@ -209,8 +200,8 @@ int main(int argc, char *argv[])
 	   	 
 			}//for
    		 }//for 
-	   	 double design_space = count_my/inputParameter->AppScale;
-
+	double design_space = count_my/inputParameter->AppScale;
+	cout << "Checkpoint 7" << endl;
    	 //row2 = design_space*inputParameter->AppScale+1;
     	AAAestrslt = new double* [int(design_space)+1];
 		for(int i =0; i <= design_space; i++)
@@ -244,7 +235,8 @@ int main(int argc, char *argv[])
 				mincount = temp_count;
 			}
 		}//for
-
+		
+		cout << "Checkpoint 8" << endl;
 		double optresult[17];
 		optresult[0] = AAAestrslt[mincount][0];
 		for (int i=1;i<6;i++)
@@ -276,8 +268,13 @@ int main(int argc, char *argv[])
 			fout<<"xbarsize:"<<optresult[16]<<endl;
 		}
    	}// if 
+
    	else if (inputParameter->sim_mode == 1)
    	{
+		row = 50;  // NEED TO FIGURE THIS OUT
+		AAestrslt = new double* [row];
+		for(int i =0; i < row; i++)
+			AAestrslt[i] = new double [10];	
 		cout << "Checkpoint 1" << endl;
         	for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
 		{
