@@ -86,9 +86,10 @@ int main(int argc, char *argv[])
 	*/
 	cout << endl;
 
-	/*  
+	  
 	//read configs  &  init configs
 	inputParameter->ReadInputParameterFromFile(inputFileName);
+	/*
 	if (inputParameter->Application[0] == 'c' ||inputParameter->Application[0] == 'C') //Convolution
         application = 0;
     else
