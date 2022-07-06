@@ -271,7 +271,7 @@ int main(int argc, char *argv[])
 
    	else if (inputParameter->sim_mode == 1)
    	{
-		row = 50;  // NEED TO FIGURE THIS OUT
+		row = (min(16,inputParameter->maxBtLv)-max(0,inputParameter->minBtLv)+1)*(log(inputParameter->maxXbarSize)/log(2)-log(inputParameter->minXbarSize)/log(2)+1)*128*inputParameter->AppScale+1;//*6 Decide by the size of crossbar
 		AAestrslt = new double* [row];
 		for(int i =0; i < row; i++)
 			AAestrslt[i] = new double [10];	
