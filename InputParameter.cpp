@@ -121,7 +121,7 @@ void InputParameter::ReadInputParameterFromFile(string filename){
 		}
 		else if(cfgtxt[i].find("Target_Outputs ")!=string::npos)
 		{
-            		Target_Output.assign(cfgtxt[i],sizeof("Target_Outputs "),cfgtxt[i].length()-sizeof("Target_Outputs"));
+            		Target_Output.assign(cfgtxt[i],sizeof("Target_Outputs"),cfgtxt[i].length()-sizeof("Target_Outputs"));
 		}
 		else if(cfgtxt[i].find("Weight_Polarity")!=string::npos)
 		{
