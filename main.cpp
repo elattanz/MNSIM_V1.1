@@ -28,7 +28,7 @@ double Mux_Power_Dynamic(int Mux_InputNum);
 
 InputParameter *inputParameter;
 int count_my = 1;
-double area,area_flags,latency,latency_multi,power_multi,power_flags,area_multi,power,energy,application,action_type,celltype;
+double area,area_flags,latency,latency_multi,power_multi,power_flags,area_multi,power,energy,application,action_type,celltype, linetech;
 double xbar_power_p, xbar_lat_p, xbar_area_p, periph_area_p, periph_lat_p, periph_power_p;
 int target;
 double pulseposition = 0;
