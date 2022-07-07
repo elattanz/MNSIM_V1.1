@@ -43,16 +43,16 @@ double tech;
 int err_count;
 Technology *technology;
 //SetMux Mux4;
-//Mux4.Mux_InputNum = 4;
-//SetDemux Demux4;
-//Demux4.Demux_InputNum = 4;
-//SetDemux Demux16;
-//Demux16.Demux_InputNum = 16;
+/*
+Mux4.Mux_InputNum = 4;
+SetDemux Demux4;
+Demux4.Demux_InputNum = 4;
+SetDemux Demux16;
+Demux16.Demux_InputNum = 16;
+*/
 
 int main(int argc, char *argv[]) 
 {
-	cout << endl << "Testing cout function in main program" << endl; 
-	
 	clock_t tic,toc;
 	tic=clock();
 	inputParameter = new InputParameter();
@@ -311,11 +311,11 @@ int main(int argc, char *argv[])
 								// this func calculates netrow and netcolumn 
 								determin_net_P(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);	
 								// crossbar power = PCM_leakage_power*xbarsize*xbarsize*netrow*netcolumn + PCM_dynamic_power*xbarsize*xbarsize*netrow*netcolumn
-								xbar_power_p = 1*xbarsize*xbarsize*netrow*netcolumn + 1*xbarsize*xbarsize*netrow*netcolumn;
+								xbar_power_p = 1e-6*xbarsize*xbarsize*netrow*netcolumn + 1e-6*xbarsize*xbarsize*netrow*netcolumn;
 								// crossbar latency = PCM_latency*xbarsize*xbarsize*netrow*netcolumn 
-								xbar_lat_p = 1*xbarsize*xbarsize*netrow*netcolumn;
+								xbar_lat_p = 1e-6*xbarsize*xbarsize*netrow*netcolumn;
 								// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
-								xbar_area_p = 1*xbarsize*xbarsize*netrow*netcolumn;
+								xbar_area_p = 1e-6*xbarsize*xbarsize*netrow*netcolumn;
 								// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
 								periph_area_p = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 								// periphery latency = #MUX*latencyMUX*netrow*netcolumn + #DEMUX*DEMUXlatency*netrow*netcolumn + subcomponents...
@@ -388,12 +388,12 @@ int main(int argc, char *argv[])
 			fout<<"xbarnumber:"<<optresult[0]<<endl;
 			fout<<"area:"<<optresult[1]<<endl;
 			fout<<"energy:"<<optresult[2]<<endl;
-			fout<<"latency:"<<optresult[4]<<endl;
-			fout<<"power:"<<optresult[5]<<endl;
-			fout<<"read_sep:"<<optresult[6]<<endl;
-			fout<<"bit_level:"<<optresult[7]<<endl;
-			fout<<"linetech:"<<optresult[8]<<endl;
-			fout<<"xbarsize:"<<optresult[9]<<endl;
+			fout<<"latency:"<<optresult[3]<<endl;
+			fout<<"power:"<<optresult[4]<<endl;
+			fout<<"read_sep:"<<optresult[5]<<endl;
+			fout<<"bit_level:"<<optresult[6]<<endl;
+			fout<<"linetech:"<<optresult[7]<<endl;
+			fout<<"xbarsize:"<<optresult[8]<<endl;
 			}
   	} // elseif 
 
