@@ -144,23 +144,23 @@ int main(int argc, char *argv[])
 		AAestrslt = new double* [row];
 		for(int i =0; i < row; i++)
 			AAestrslt[i] = new double [19];
-    		cout << "Checkpoint 5a" << endl;
+    		
 		for (double adposition=max(0,inputParameter->minAdPos);adposition<=min(1,inputParameter->maxAdPos);adposition++) 
     		{
-			cout << "Checkpoint 5b" << endl;
+			
         		for (double bit_level = max(0,inputParameter->minBtLv);(bit_level<=min(16,inputParameter->maxBtLv));bit_level++) 
 			{
-				cout << "Checkpoint 5c" << endl;
+				
             			for (double adderposition = max(0,inputParameter->minAdder);adderposition<=min(1,inputParameter->maxAdder);adderposition++) 
 	    			{
                 			//for (double linetech = 90;linetech<=90;linetech++) 
 					//{    //[18,22,28,36,45,65,90];
                         			for (double xbarsize = inputParameter->minXbarSize;xbarsize<=inputParameter->maxXbarSize;xbarsize*=2) 
 						{   //[4,8,16,32,64,128,256]%,512,1024]
-							cout << "Checkpoint 5d" << endl;
+							
                             				for (double read_sep = 1;read_sep<=128;read_sep++)
 			    				{   //xbarsize/128 : xbarsize/128 : xbarsize%8:8:xbarsize
-								cout << "Checkpoint 5e" << endl;
+								
                                 				if (xbarsize<inputParameter->minXbarSize || xbarsize > inputParameter->maxXbarSize)
 								{
                                     					cout<<"error:xbarsize over the limit"<<endl;
@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
 								{
 									for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) 
 									{ //-1
-									cout << "Checkpoint 6" << endl;
+									
 									for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) { //-1
 										if (bit_level != 0)
 											cell_bit = bit_level; }
@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
 			}//for
    		 }//for 
 	double design_space = count_my/inputParameter->AppScale;
-	cout << "Checkpoint 7" << endl;
+	
    	 //row2 = design_space*inputParameter->AppScale+1;
     	AAAestrslt = new double* [int(design_space)+1];
 		for(int i =0; i <= design_space; i++)
@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
 			}
 		}//for
 		
-		cout << "Checkpoint 8" << endl;
+		
 		double optresult[17];
 		optresult[0] = AAAestrslt[mincount][0];
 		for (int i=1;i<6;i++)
@@ -284,7 +284,6 @@ int main(int argc, char *argv[])
 		AAestrslt = new double* [row];
 		for(int i =0; i < row; i++)
 			AAestrslt[i] = new double [10];	
-		cout << "Checkpoint 1" << endl;
 		double minarea = 8e10;
    		double minenergy = 8e10;
     		double minpower = 8e10;
@@ -309,7 +308,6 @@ int main(int argc, char *argv[])
 						{
 							for (int netlevel = 1;netlevel<=inputParameter->AppScale;netlevel++) 
 							{ 
-								cout << "Checkpoint 2" << endl;
 								// this func calculates netrow and netcolumn 
 								determin_net_P(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);	
 								// crossbar power = PCM_leakage_power*xbarsize*xbarsize*netrow*netcolumn + PCM_dynamic_power*xbarsize*xbarsize*netrow*netcolumn
@@ -347,7 +345,6 @@ int main(int argc, char *argv[])
     		    		}//for
 	   	 	}//for
    	 	}//for 
-		cout << "Checkpoint 3" << endl;
    		 double design_space = count_my/inputParameter->AppScale;
    		 AAAestrslt = new double* [int(design_space)+1];
 		for(int i =0; i <= design_space; i++)
@@ -400,7 +397,6 @@ int main(int argc, char *argv[])
 			fout<<"xbarsize:"<<optresult[9]<<endl;
 			}
   	} // elseif 
-	cout << "Checkpoint 5" << endl;
 
 	toc=clock();
    	cout<<"Run time: "<<(double)(toc-tic)/CLOCKS_PER_SEC<<"S"<<endl;
