@@ -335,7 +335,7 @@ int main(int argc, char *argv[])
 								// power = crossbar power + crossbar latency
 								power = xbar_power_p + periph_power_p;
 								// ***** There is a good change this energy calculation won't be accurate because we did not add the read and write power of PCM
-								energy = (utilization*crossbar power * crossbar latency) + (peripherary power * peripherary latency);
+								energy = (utilization*xbar_power_p * xbar_lat_p) + (periph_power_p * periph_lat_p);
 								//energy = 10;
 								equal_P(netlevel,area,energy,latency,power,read_sep,bit_level,linetech,xbarsize);
 								count_my = count_my + 1;
