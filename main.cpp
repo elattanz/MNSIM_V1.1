@@ -60,13 +60,13 @@ int main(int argc, char *argv[])
 	string inputFileName;
 	string outputFileName;
 
-	//if (argc == 1) {   //read configuration file
+	if (argc == 1) {   //read configuration file
 		inputFileName = "SimConfig.txt";
 		outputFileName = "result.txt";
 		cout << "Default sim-config file (SimConfig.txt) is loaded" << endl;
 		cout << "Use default output results file (result.txt)" << endl;
-	//} 
-	/*else if (argc == 2) {
+	} 
+	else if (argc == 2) {
 		inputFileName = argv[1];
 		cout << "User-defined sim-config file (" << inputFileName << ") is loaded" << endl;
 		cout << "Use default output results file (result.txt)" << endl;
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 		cout << "  Use the customized configuration: " << argv[0] << " <.txt file>"  << endl;
 		exit(-1);
 	}
-	*/
+	
 	cout << endl;
 
 	  
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 	*/
 	
 	   
-	switch (inputParameter->Target_Output[0]) {
+	switch (inputParameter->Target_Output[1]) {
 		case 'a':
 				target = 1;break;
 		case 'A':
@@ -335,8 +335,8 @@ int main(int argc, char *argv[])
 								// power = crossbar power + crossbar latency
 								power = xbar_power_p + periph_power_p;
 								// ***** There is a good change this energy calculation won't be accurate because we did not add the read and write power of PCM
-								//energy = (utilization*crossbar power * crossbar latency) + (peripherary power * peripherary latency);
-								energy = 10;
+								energy = (utilization*crossbar power * crossbar latency) + (peripherary power * peripherary latency);
+								//energy = 10;
 								equal_P(netlevel,area,energy,latency,power,read_sep,bit_level,linetech,xbarsize);
 								count_my = count_my + 1;
 							}//for				
@@ -372,8 +372,7 @@ int main(int argc, char *argv[])
 				mintarget[target-1] = AAAestrslt[temp_count][target+1];
 				mincount = temp_count;
 			} //if 
-		}//for 
-		cout << "Checkpoint 4" << endl;
+		}//for
 		double optresult[9];
 		optresult[0] = AAAestrslt[mincount][0];
 		for (int i=1;i<6;i++)
