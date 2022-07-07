@@ -119,9 +119,9 @@ void InputParameter::ReadInputParameterFromFile(string filename){
             		temp.assign(cfgtxt[i],sizeof("Application_Scale"),temp.length()-sizeof("Application_Scale")); 
 			AppScale = std::stoi (temp,nullptr,0);
 		}
-		else if(cfgtxt[i].find("Target_Outputs ")!=string::npos)
+		else if(cfgtxt[i].find("Target_Output")!=string::npos)
 		{
-            		Target_Output.assign(cfgtxt[i],sizeof("Target_Outputs"),cfgtxt[i].length()-sizeof("Target_Outputs"));
+            		Target_Output.assign(cfgtxt[i],sizeof("Target_Output"),cfgtxt[i].length()-sizeof("Target_Output"));
 		}
 		else if(cfgtxt[i].find("Weight_Polarity")!=string::npos)
 		{
