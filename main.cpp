@@ -374,8 +374,10 @@ int main(int argc, char *argv[])
 				else
 					AAAestrslt[temp_count][4] = (AAAestrslt[temp_count][4] > AAestrslt[((temp_count-1) * inputParameter->AppScale + netlevel_temp)][4]*(inputParameter->ComputationTime[netlevel_temp-1]))? AAAestrslt[temp_count][4] : AAestrslt[((temp_count-1) * inputParameter->AppScale + netlevel_temp)][4]*(inputParameter->ComputationTime[netlevel_temp-1]);
 				AAAestrslt[temp_count][5] += AAestrslt[((temp_count-1) * inputParameter->AppScale +netlevel_temp)][5];   //power
-				for(int i = 6;i<12;i++)   //read_sep, bit_level, linetech, xbarsize
+				for(int i = 6;i<10;i++)   //read_sep, bit_level, linetech, xbarsize
 					AAAestrslt[temp_count][i] = AAestrslt[((temp_count-1) * inputParameter->AppScale +netlevel_temp)][i];
+				AAAestrslt[temp_count][10] += AAestrslt[((temp_count-1) * inputParameter->AppScale +netlevel_temp)][10];   //power
+       				AAAestrslt[temp_count][11] += AAestrslt[((temp_count-1) * inputParameter->AppScale +netlevel_temp)][11];   //power
 			} //for
 			if (AAAestrslt[temp_count][target+1] < mintarget[target-1])
 			{
