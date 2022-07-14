@@ -319,11 +319,11 @@ int main(int argc, char *argv[])
 								// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
 								xbar_area_p = 9.07e-6*xbarsize*xbarsize*netrow*netcolumn;
 								// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
-								//periph_area_p = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
-								periph_area_p = 4*Mux_Area(4) + 1*Demux_Area(16) + 4*Demux_Area(4);
+								periph_area_p = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
+								//periph_area_p = 4*Mux_Area(4) + 1*Demux_Area(16) + 4*Demux_Area(4);
 								// periphery latency = #MUX*latencyMUX*netrow*netcolumn + #DEMUX*DEMUXlatency*netrow*netcolumn + subcomponents...
-								//periph_lat_p = 4*Mux_Latency(4)*netrow*netcolumn + 1*Demux_Latency(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
-								periph_lat_p = 4*Mux_Latency(4) + 1*Demux_Latency(16) + 4*Demux_Area(4);	
+								periph_lat_p = 4*Mux_Latency(4)*netrow*netcolumn + 1*Demux_Latency(16)*netrow*netcolumn + 4*Demux_Latency(4)*netrow*netcolumn;
+								//periph_lat_p = 4*Mux_Latency(4) + 1*Demux_Latency(16) + 4*Demux_Latency(4);	
 								// periphery power = #MUX*MUXleakagePower*netrow*netcolumn + #MUX*MUXdynamicPower*netrow*netcolumn + #DEMUX*DEMUXleakagePower*netrow*netcolumn + #DEMUX*DEMUXdynamicPower*netrow*netcolumn+ subcomponents...
 								p_dym_power = 4*Mux_Power_Dynamic(4)*netrow*netcolumn + 1*Demux_Power_Dynamic(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn;
 								p_lkg_power = 4*Mux_Power_Leakage(4)*netrow*netcolumn + 1*Demux_Power_Leakage(16)*netrow*netcolumn + 4*Demux_Power_Leakage(4)*netrow*netcolumn;
@@ -479,15 +479,15 @@ double max1(int a,int b,int c) {
 double Demux_Area(int Demux_InputNum){
   switch(Demux_InputNum) {
     case 4 :
-      return 15.4869;
+      return 15.4869e-12;
     case 8 :
-      return 34.2589;
+      return 34.2589e-12;
     case 16 : 
-      return 76.9652;
+      return 76.9652e-12;
     case 32 :
-      return 140.790;
+      return 140.790e-12;
     case 64 :
-      return 263.2773;
+      return 263.2773e-12;
     default :
       return 0; }
   }
@@ -495,15 +495,15 @@ double Demux_Area(int Demux_InputNum){
 double Demux_Latency(int Demux_InputNum){
   switch(Demux_InputNum) {
     case 4 :
-      return .08;
+      return .08e-9;
     case 8 :
-      return .13;
+      return .13e-9;
     case 16 : 
-      return .11;
+      return .11e-9;
     case 32 :
-      return .18;
+      return .18e-9;
     case 64 :
-      return .19;
+      return .19e-9;
     default :
       return 0; }
   }
@@ -543,15 +543,15 @@ double Demux_Power_Dynamic(int Demux_InputNum){
 double Mux_Area(int Mux_InputNum){
   switch(Mux_InputNum) {
     case 4 :
-      return 11.2632;
+      return 11.2632e-12;
     case 8 :
-      return 27.6887;
+      return 27.6887e-12;
     case 16 : 
-      return 132.3426;
+      return 132.3426e-12;
     case 32 :
-      return 276.417;
+      return 276.417e-12;
     case 64 :
-      return 561.2829;
+      return 561.2829e-12;
     default :
       return 0; }
   }
@@ -559,15 +559,15 @@ double Mux_Area(int Mux_InputNum){
 double Mux_Latency(int Mux_InputNum){
   switch(Mux_InputNum) {
     case 4 :
-      return .07;
+      return .07e-9;
     case 8 :
-      return .14;
+      return .14e-9;
     case 16 : 
-      return .49;
+      return .49e-9;
     case 32 :
-      return .81;
+      return .81e-9;
     case 64 :
-      return 1.188;
+      return 1.188e-9;
     default :
       return 0; }
   }
