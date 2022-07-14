@@ -380,12 +380,22 @@ int main(int argc, char *argv[])
 				mincount = temp_count;
 			} //if 
 		}//for
-		double optresult[9];
+		double optresult[11];
 		optresult[0] = AAAestrslt[mincount][0];
-		for (int i=1;i<6;i++)
-			optresult[i] = AAAestrslt[mincount][i+1];
-		for (int i=6;i<11;i++)
-			optresult[i] = AAAestrslt[mincount][i+2];
+		optresult[1] = AAAestrslt[mincount][2];
+		optresult[2] = AAAestrslt[mincount][3];
+		optresult[3] = AAAestrslt[mincount][4];
+		optresult[4] = AAAestrslt[mincount][5];
+		optresult[5] = AAAestrslt[mincount][6];
+		optresult[6] = AAAestrslt[mincount][7];
+		optresult[7] = AAAestrslt[mincount][8];
+		optresult[8] = AAAestrslt[mincount][9];
+		optresult[9] = AAAestrslt[mincount][10];
+		optresult[10] = AAAestrslt[mincount][11];
+		//for (int i=1;i<6;i++)
+		//	optresult[i] = AAAestrslt[mincount][i+1];
+		//for (int i=6;i<11;i++)
+		//	optresult[i] = AAAestrslt[mincount][i+2];
 	
 		ofstream fout;
 		fout.open(outputFileName,ios::out);
