@@ -16,7 +16,7 @@
 using namespace std;
 
 
-void equal_P(double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize);
+void equal_P(double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize, double dym_power, double lkg_power);
 double Demux_Area(int Demux_InputNum);
 double Demux_Latency(int Demux_InputNum);
 double Demux_Power_Leakage(int Demux_InputNum);
@@ -29,7 +29,7 @@ double Mux_Power_Dynamic(int Mux_InputNum);
 InputParameter *inputParameter;
 int count_my = 1;
 double area,area_flags,latency,latency_multi,power_multi,power_flags,area_multi,power,energy,application,action_type,celltype, linetech;
-double xbar_power_p, xbar_lat_p, xbar_area_p, periph_area_p, periph_lat_p, periph_power_p;
+double xbar_power_p, xbar_lat_p, xbar_area_p, periph_area_p, periph_lat_p, periph_power_p, x_dym_power, x_lkg_power, p_dym_power, p_lkg_power, dym_power, lkg_power;
 int target;
 double pulseposition = 0;
 double cell_bit = 8;
@@ -283,7 +283,7 @@ int main(int argc, char *argv[])
 		row = (min(16,inputParameter->maxBtLv)-max(0,inputParameter->minBtLv)+1)*(log(inputParameter->maxXbarSize)/log(2)-log(inputParameter->minXbarSize)/log(2)+1)*128*inputParameter->AppScale+1;//*6 Decide by the size of crossbar
 		AAestrslt = new double* [row];
 		for(int i =0; i < row; i++)
-			AAestrslt[i] = new double [10];	
+			AAestrslt[i] = new double [12];	
 		double minarea = 8e10;
    		double minenergy = 8e10;
     		double minpower = 8e10;
@@ -311,23 +311,30 @@ int main(int argc, char *argv[])
 								// this func calculates netrow and netcolumn 
 								determin_net_P(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);	
 								// crossbar power = PCM_leakage_power*xbarsize*xbarsize*netrow*netcolumn + PCM_dynamic_power*xbarsize*xbarsize*netrow*netcolumn
-								xbar_power_p = 1e-6*xbarsize*xbarsize*netrow*netcolumn + 1e-6*xbarsize*xbarsize*netrow*netcolumn;
+								x_dym_power = 1e-6*xbarsize*xbarsize*netrow*netcolumn;
+								x_lkg_power = 1e-6*xbarsize*xbarsize*netrow*netcolumn;
+								xbar_power_p = x_dym_power + x_lkg_power;
 								// crossbar latency = PCM_latency*xbarsize*xbarsize*netrow*netcolumn 
-								xbar_lat_p = 1e-6*xbarsize*xbarsize*netrow*netcolumn;
+								xbar_lat_p = 2e-11*netrow*netcolumn;
 								// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
-								xbar_area_p = 1e-6*xbarsize*xbarsize*netrow*netcolumn;
+								xbar_area_p = 9.07e-6*xbarsize*xbarsize*netrow*netcolumn;
 								// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
 								periph_area_p = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 								// periphery latency = #MUX*latencyMUX*netrow*netcolumn + #DEMUX*DEMUXlatency*netrow*netcolumn + subcomponents...
 								periph_lat_p = 4*Mux_Latency(4)*netrow*netcolumn + 1*Demux_Latency(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 								// periphery power = #MUX*MUXleakagePower*netrow*netcolumn + #MUX*MUXdynamicPower*netrow*netcolumn + #DEMUX*DEMUXleakagePower*netrow*netcolumn + #DEMUX*DEMUXdynamicPower*netrow*netcolumn+ subcomponents...
-								periph_power_p = 4*Mux_Power_Leakage(4)*netrow*netcolumn + 1*Demux_Power_Leakage(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn + 4*Mux_Power_Dynamic(4)*netrow*netcolumn + 1*Demux_Power_Dynamic(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn;
+								p_dym_power = 4*Mux_Power_Dynamic(4)*netrow*netcolumn + 1*Demux_Power_Dynamic(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn;
+								p_lkg_power = 4*Mux_Power_Leakage(4)*netrow*netcolumn + 1*Demux_Power_Leakage(16)*netrow*netcolumn + 4*Demux_Power_Leakage(4)*netrow*netcolumn;
 								for (int j=0; j < inputParameter->subCompNum; j++)
 								{
 									periph_area_p = periph_area_p + inputParameter->subArea[j]*netrow*netcolumn;
 									periph_lat_p = periph_lat_p + inputParameter->subLatency[j]*netrow*netcolumn;
-									periph_power_p = periph_power_p + inputParameter->subLeakPw[j]*netrow*netcolumn + inputParameter->subDymPw[j]*netrow*netcolumn;
+									p_lkg_power =  p_dym_power+ inputParameter->subLeakPw[j]*netrow*netcolumn;
+									p_dym_power = p_lkg_power + inputParameter->subDymPw[j]*netrow*netcolumn;
 								}
+								periph_power_p = p_dym_power + p_lkg_power;
+								dym_power = x_dym_power + p_dym_power;
+								lkg_power = x_lkg_power + p_lkg_power;
 								// area = crossbar area + periphery area
 								area = xbar_area_p + periph_area_p; 
 								// latency = crossbar latency + periphery latency
@@ -348,7 +355,7 @@ int main(int argc, char *argv[])
    		 double design_space = count_my/inputParameter->AppScale;
    		 AAAestrslt = new double* [int(design_space)+1];
 		for(int i =0; i <= design_space; i++)
-			AAAestrslt[i] = new double [10];
+			AAAestrslt[i] = new double [12];
 		for (int temp_count = 1;temp_count<=design_space;temp_count++) 
 		{
 			for(int netlevel_temp=1;netlevel_temp<=inputParameter->AppScale;netlevel_temp++) 
@@ -364,7 +371,7 @@ int main(int argc, char *argv[])
 				else
 					AAAestrslt[temp_count][4] = (AAAestrslt[temp_count][4] > AAestrslt[((temp_count-1) * inputParameter->AppScale + netlevel_temp)][4]*(inputParameter->ComputationTime[netlevel_temp-1]))? AAAestrslt[temp_count][4] : AAestrslt[((temp_count-1) * inputParameter->AppScale + netlevel_temp)][4]*(inputParameter->ComputationTime[netlevel_temp-1]);
 				AAAestrslt[temp_count][5] += AAestrslt[((temp_count-1) * inputParameter->AppScale +netlevel_temp)][5];   //power
-				for(int i = 6;i<10;i++)   //read_sep, bit_level, linetech, xbarsize
+				for(int i = 6;i<12;i++)   //read_sep, bit_level, linetech, xbarsize
 					AAAestrslt[temp_count][i] = AAestrslt[((temp_count-1) * inputParameter->AppScale +netlevel_temp)][i];
 			} //for
 			if (AAAestrslt[temp_count][target+1] < mintarget[target-1])
@@ -377,7 +384,7 @@ int main(int argc, char *argv[])
 		optresult[0] = AAAestrslt[mincount][0];
 		for (int i=1;i<6;i++)
 			optresult[i] = AAAestrslt[mincount][i+1];
-		for (int i=6;i<9;i++)
+		for (int i=6;i<11;i++)
 			optresult[i] = AAAestrslt[mincount][i+2];
 	
 		ofstream fout;
@@ -389,7 +396,9 @@ int main(int argc, char *argv[])
 			fout<<"area:"<<optresult[1]<<endl;
 			fout<<"energy:"<<optresult[2]<<endl;
 			fout<<"latency:"<<optresult[3]<<endl;
-			fout<<"power:"<<optresult[4]<<endl;
+			fout<<"total power:"<<optresult[4]<<endl;
+			fout<<"dynamic power:"<<optresult[9]<<endl;
+			fout<<"leakage power:"<<optresult[10]<<endl;
 			fout<<"read_sep:"<<optresult[5]<<endl;
 			fout<<"bit_level:"<<optresult[6]<<endl;
 			fout<<"linetech:"<<optresult[7]<<endl;
@@ -428,7 +437,7 @@ void equal(double netlevel,double area,double energy,double latency,double power
 	AAestrslt[count_my][18] = xbarsize;
 }
 
-void equal_P(double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize) {
+void equal_P(double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize, double dym_power, double lkg_power) {
 	AAestrslt[count_my][0] = netrow * netcolumn;
 	AAestrslt[count_my][1] = netlevel;
 	AAestrslt[count_my][2] = area;
@@ -439,6 +448,8 @@ void equal_P(double netlevel,double area,double energy,double latency,double pow
 	AAestrslt[count_my][7] = bit_level;  //originally [13]
 	AAestrslt[count_my][8] = linetech;  //originally [16]
 	AAestrslt[count_my][9] = xbarsize;  //originally [18]
+	AAestrslt[count_my][10] = dym_power;
+	AAestrslt[count_my][11] = lkg_power;
 }
 
 double max1(int a,int b,int c) {
