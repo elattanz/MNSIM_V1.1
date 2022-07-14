@@ -319,9 +319,11 @@ int main(int argc, char *argv[])
 								// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
 								xbar_area_p = 9.07e-6*xbarsize*xbarsize*netrow*netcolumn;
 								// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
-								periph_area_p = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
+								//periph_area_p = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
+								periph_area_p = 4*Mux_Area(4) + 1*Demux_Area(16) + 4*Demux_Area(4);
 								// periphery latency = #MUX*latencyMUX*netrow*netcolumn + #DEMUX*DEMUXlatency*netrow*netcolumn + subcomponents...
-								periph_lat_p = 4*Mux_Latency(4)*netrow*netcolumn + 1*Demux_Latency(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
+								//periph_lat_p = 4*Mux_Latency(4)*netrow*netcolumn + 1*Demux_Latency(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
+								periph_lat_p = 4*Mux_Latency(4) + 1*Demux_Latency(16) + 4*Demux_Area(4);	
 								// periphery power = #MUX*MUXleakagePower*netrow*netcolumn + #MUX*MUXdynamicPower*netrow*netcolumn + #DEMUX*DEMUXleakagePower*netrow*netcolumn + #DEMUX*DEMUXdynamicPower*netrow*netcolumn+ subcomponents...
 								p_dym_power = 4*Mux_Power_Dynamic(4)*netrow*netcolumn + 1*Demux_Power_Dynamic(16)*netrow*netcolumn + 4*Demux_Power_Dynamic(4)*netrow*netcolumn;
 								p_lkg_power = 4*Mux_Power_Leakage(4)*netrow*netcolumn + 1*Demux_Power_Leakage(16)*netrow*netcolumn + 4*Demux_Power_Leakage(4)*netrow*netcolumn;
@@ -340,7 +342,8 @@ int main(int argc, char *argv[])
 								// latency = crossbar latency + periphery latency
 								latency = xbar_lat_p + periph_lat_p;
 								// power = crossbar power + crossbar latency
-								power = xbar_power_p + periph_power_p;
+								//power = xbar_power_p + periph_power_p;
+								power = dym_power + lkg_power;
 								// ***** There is a good change this energy calculation won't be accurate because we did not add the read and write power of PCM
 								energy = (utilization*xbar_power_p * xbar_lat_p) + (periph_power_p * periph_lat_p);
 								//energy = 10;
