@@ -317,7 +317,7 @@ int main(int argc, char *argv[])
 								// crossbar latency = PCM_latency*xbarsize*xbarsize*netrow*netcolumn 
 								xbar_lat_p = 2e-11*netrow*netcolumn;
 								// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
-								xbar_area_p = 9.07e-6*xbarsize*xbarsize*netrow*netcolumn;
+								xbar_area_p = 9.07e-6*netrow*netcolumn;
 								// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
 								periph_area_p = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 								//periph_area_p = 4*Mux_Area(4) + 1*Demux_Area(16) + 4*Demux_Area(4);
