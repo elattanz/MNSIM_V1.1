@@ -346,7 +346,7 @@ int main(int argc, char *argv[])
 								power = dym_power + lkg_power;
 								// ***** There is a good change this energy calculation won't be accurate because we did not add the read and write power of PCM
 								//energy = (utilization*xbar_power_p * xbar_lat_p) + (periph_power_p * periph_lat_p);
-								energy = 50*bit_level*xbarsize*xbarsize*netrow*netcolumn + (periph_power_p * periph_lat_p); 
+								energy = 50e-15*bit_level*xbarsize*xbarsize*netrow*netcolumn + (periph_power_p * periph_lat_p); 
 								//energy = 10;
 								equal_P(netlevel,area,energy,latency,power,read_sep,bit_level,linetech,xbarsize,dym_power,lkg_power);
 								count_my = count_my + 1;
