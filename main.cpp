@@ -311,8 +311,8 @@ int main(int argc, char *argv[])
 								// this func calculates netrow and netcolumn 
 								determin_net_P(xbarsize,inputParameter->InputLength[netlevel-1],inputParameter->OutputChannel[netlevel-1]);	
 								// crossbar power = PCM_leakage_power*xbarsize*xbarsize*netrow*netcolumn + PCM_dynamic_power*xbarsize*xbarsize*netrow*netcolumn
-								x_dym_power = 1e-6*xbarsize*xbarsize*netrow*netcolumn;
-								x_lkg_power = 1e-6*xbarsize*xbarsize*netrow*netcolumn;
+								x_dym_power = 1e-9*xbarsize*xbarsize*netrow*netcolumn;
+								x_lkg_power = 1e-9*xbarsize*xbarsize*netrow*netcolumn;
 								xbar_power_p = x_dym_power + x_lkg_power;
 								// crossbar latency = PCM_latency*xbarsize*xbarsize*netrow*netcolumn 
 								xbar_lat_p = 2e-11*netrow*netcolumn;
@@ -345,7 +345,8 @@ int main(int argc, char *argv[])
 								//power = xbar_power_p + periph_power_p;
 								power = dym_power + lkg_power;
 								// ***** There is a good change this energy calculation won't be accurate because we did not add the read and write power of PCM
-								energy = (utilization*xbar_power_p * xbar_lat_p) + (periph_power_p * periph_lat_p);
+								//energy = (utilization*xbar_power_p * xbar_lat_p) + (periph_power_p * periph_lat_p);
+								energy = 50*bit_level*xbarsize*xbarsize*netrow*netcolumn + (periph_power_p * periph_lat_p); 
 								//energy = 10;
 								equal_P(netlevel,area,energy,latency,power,read_sep,bit_level,linetech,xbarsize,dym_power,lkg_power);
 								count_my = count_my + 1;
