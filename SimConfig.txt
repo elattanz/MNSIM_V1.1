@@ -1,17 +1,17 @@
 config {
 	Photonic
-	Application_Scale 9
+	Application_Scale 8
 	Target_Output Area
 	Weight_Polarity 2
 	Bit_Levels 8
-	Min_Crossbar_Size 256
-	Max_Crossbar_Size 256
+	Min_Crossbar_Size 16
+	Max_Crossbar_Size 16
 	Pipeline 0
 }
 
 Layer1 {
-	Name Conv
-	Inputsize 112
+	Conv
+	Inputsize 224
 	Outputsize 55
 	Kernelsize 11
 	Stride 4
@@ -20,8 +20,8 @@ Layer1 {
 }
 
 Layer2 {
-	Name Conv
-	Inputsize 54
+	Conv
+	Inputsize 27
 	Outputsize 27
 	Kernelsize 5
 	Stride 1
@@ -30,17 +30,7 @@ Layer2 {
 }
 
 Layer3 {
-	Name Conv
-	Inputsize 13
-	Outputsize 13
-	Kernelsize 3
-	Stride 1
-	Inputchannel 256
-	Outputchannel 384
-}
-
-Layer3 {
-	Name Conv
+	Conv
 	Inputsize 13
 	Outputsize 13
 	Kernelsize 3
@@ -50,7 +40,7 @@ Layer3 {
 }
 
 Layer4 {
-	Name Conv
+	Conv
 	Inputsize 13
 	Outputsize 13
 	Kernelsize 3
@@ -60,35 +50,30 @@ Layer4 {
 }
 
 Layer5 {
-	Name Conv
+	Conv
 	Inputsize 13
 	Outputsize 13
 	Kernelsize 3
-	Stride 1
+	Stride 2
 	Inputchannel 384
 	Outputchannel 256
 }
 
 Layer6 {
-	Name FC
-	Inputlength 9216
+	FC
+	Inputlength 1536
 	Outputlength 4096
 }
 
 Layer7 {
-	Name FC
+	FC
 	Inputlength 4096
 	Outputlength 4096
 }
 
 Layer8 {
-	Name FC
+	FC
 	Inputlength 4096
 	Outputlength 1000
 }
 
-Layer9 {
-	Name FC
-	Inputlength 1000
-	Outputlength 10
-}
