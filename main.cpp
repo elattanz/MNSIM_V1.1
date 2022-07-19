@@ -16,7 +16,7 @@
 using namespace std;
 
 
-void equal_P(double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize, double dym_power, double lkg_power);
+void equal_P(double netRow, double netCol,double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize, double dym_power, double lkg_power);
 double Demux_Area(int Demux_InputNum);
 double Demux_Latency(int Demux_InputNum);
 double Demux_Power_Leakage(int Demux_InputNum);
@@ -317,7 +317,7 @@ int main(int argc, char *argv[])
 								// crossbar latency = PCM_latency*xbarsize*xbarsize*netrow*netcolumn 
 								xbar_lat_p = 2e-11*netrow*netcolumn;
 								// crossbar area = PCM_area*xbarsize*xbarsize*netrow*netcolumn 
-								xbar_area_p = 9.07e-6*netrow*netcolumn;
+								xbar_area_p = 9.07e-12*netrow*netcolumn;
 								// periphery area = #MUX*areaMUX*netrow*netcolumn + #DEMUX*areaDEMUX*netrow*netcolumn + subcomponents...
 								periph_area_p = 4*Mux_Area(4)*netrow*netcolumn + 1*Demux_Area(16)*netrow*netcolumn + 4*Demux_Area(4)*netrow*netcolumn;
 								//periph_area_p = 4*Mux_Area(4) + 1*Demux_Area(16) + 4*Demux_Area(4);
@@ -348,7 +348,7 @@ int main(int argc, char *argv[])
 								//energy = (utilization*xbar_power_p * xbar_lat_p) + (periph_power_p * periph_lat_p);
 								energy = 50e-15*bit_level*xbarsize*xbarsize*netrow*netcolumn + (periph_power_p * periph_lat_p); 
 								//energy = 10;
-								equal_P(netlevel,area,energy,latency,power,read_sep,bit_level,linetech,xbarsize,dym_power,lkg_power);
+								equal_P(netrow, netcolumn, netlevel,area,energy,latency,power,read_sep,bit_level,linetech,xbarsize,dym_power,lkg_power);
 								count_my = count_my + 1;
 							}//for				
 						}//else
@@ -412,9 +412,9 @@ int main(int argc, char *argv[])
 			fout<<"area:"<<optresult[1]<<endl;
 			fout<<"energy:"<<optresult[2]<<endl;
 			fout<<"latency:"<<optresult[3]<<endl;
-			fout<<"total power:"<<optresult[4]<<endl;
-			fout<<"dynamic power:"<<optresult[9]<<endl;
-			fout<<"leakage power:"<<optresult[10]<<endl;
+			//fout<<"total power:"<<optresult[4]<<endl;
+			//fout<<"dynamic power:"<<optresult[9]<<endl;
+			//fout<<"leakage power:"<<optresult[10]<<endl;
 			fout<<"read_sep:"<<optresult[5]<<endl;
 			fout<<"bit_level:"<<optresult[6]<<endl;
 			fout<<"linetech:"<<optresult[7]<<endl;
@@ -453,8 +453,8 @@ void equal(double netlevel,double area,double energy,double latency,double power
 	AAestrslt[count_my][18] = xbarsize;
 }
 
-void equal_P(double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize, double dym_power, double lkg_power) {
-	AAestrslt[count_my][0] = netrow * netcolumn;
+void equal_P(double netRow, double netCol,double netlevel,double area,double energy,double latency,double power,double read_sep,double bit_level,double linetech,double xbarsize, double dym_power, double lkg_power) {
+	AAestrslt[count_my][0] = netRow * netCol;
 	AAestrslt[count_my][1] = netlevel;
 	AAestrslt[count_my][2] = area;
 	AAestrslt[count_my][3] = energy;
